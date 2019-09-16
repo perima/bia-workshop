@@ -88,9 +88,40 @@ We want to keep the app preview running so we will open a new terminal to work w
 
 
 ## Clean up src/app.js 
-Use the src/app.js file @todo
+Replace the contents of src/app.js file with the following
+```javascript
+/**
+ * 
+ * Building Intelligent Applications Worksgop
+ * 
+ */
 
-## Initialize amplify
+import React, { Component } from 'react';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container';
+import 'typeface-roboto';
+
+class App extends Component { 
+    render() { 
+        return (
+            <React.Fragment>
+            <CssBaseline />
+            <Container maxWidth="sm">
+              <Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '100vh' }} >
+               Unicorns are real!
+              </Typography>
+            </Container>
+          </React.Fragment>
+        );
+    }
+}
+
+export default App;
+```
+
+
+## Initialize Amplify
 
 1. In the project source directory run the  ```bash amplify init``` command.
  
@@ -111,3 +142,25 @@ Use the src/app.js file @todo
 9. Press Enter to select the default AWS profile 
 
 @todo add here amplify-settings.png
+
+# Add Authentication
+We will start by adding authentation to our app.
+
+In the terminal use command ```amplify add auth```
+
+You will be asked a number of questions, please use the following values:
+
+*Do you want to use the default authentication and security configuration?* **Default Configuration**
+
+*How do you want users to be able to sign in?* **Username**
+
+*Do you want to configure advanced settings?* **No, I am done.**
+
+Run ```amplify push``` to publish your backend changes in the cloud.
+
+When asked *Are you sure you want to continue?* Press Enter.
+
+Please note building the backend resources may take a couple of minutes.
+
+# Add Amplify npm dependencies
+ ```npm install --save aws-amplify aws-amplify-react ```

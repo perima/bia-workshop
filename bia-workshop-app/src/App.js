@@ -1,4 +1,8 @@
-// src/App.js
+/**
+ * 
+ * Building Intelligent Applications Worksgop
+ * 
+ */
 
 import React, { Component } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,7 +16,9 @@ class App extends Component {
             <React.Fragment>
             <CssBaseline />
             <Container maxWidth="sm">
-              <Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '100vh' }} />
+              <Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '100vh' }} >
+                Unicorns are real!
+              </Typography>
             </Container>
           </React.Fragment>
         );

@@ -9,6 +9,11 @@
             "UnauthRoleName": "bia-workshop-app-dev-20190916173906-unauthRole",
             "StackName": "bia-workshop-app-dev-20190916173906",
             "StackId": "arn:aws:cloudformation:us-west-2:927378468065:stack/bia-workshop-app-dev-20190916173906/e1bf0b50-d8a8-11e9-b45a-02a77ed54d64"
+        },
+        "categories": {
+            "auth": {
+                "biaworkshopapp40c590c0": {}
+            }
         }
     }
 }

@@ -1,1 +1,9 @@
-{}
+{
+	"auth": {
+		"biaworkshopapp40c590c0": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": []
+		}
+	}
+}
