@@ -1,26 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+// src/App.js
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import React, { Component } from 'react';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container';
+import 'typeface-roboto';
+
+class App extends Component { 
+    render() { 
+        return (
+            <React.Fragment>
+            <CssBaseline />
+            <Container maxWidth="sm">
+              <Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '100vh' }} />
+            </Container>
+          </React.Fragment>
+        );
+    }
 }
 
 export default App;

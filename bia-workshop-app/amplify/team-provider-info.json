@@ -1,0 +1,14 @@
+{
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "bia-workshop-app-dev-20190916173906-authRole",
+            "UnauthRoleArn": "arn:aws:iam::927378468065:role/bia-workshop-app-dev-20190916173906-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::927378468065:role/bia-workshop-app-dev-20190916173906-authRole",
+            "Region": "us-west-2",
+            "DeploymentBucketName": "bia-workshop-app-dev-20190916173906-deployment",
+            "UnauthRoleName": "bia-workshop-app-dev-20190916173906-unauthRole",
+            "StackName": "bia-workshop-app-dev-20190916173906",
+            "StackId": "arn:aws:cloudformation:us-west-2:927378468065:stack/bia-workshop-app-dev-20190916173906/e1bf0b50-d8a8-11e9-b45a-02a77ed54d64"
+        }
+    }
+}

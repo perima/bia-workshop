@@ -22,6 +22,7 @@
 3. Close welcome screen
 4. Open new terminal 
 
+@todo add here the screenshot with instructions
 
 ## 1.4. Install & update your workspace.
 Run the following commands 
@@ -68,7 +69,11 @@ cd bia-workshop-app/
 For our components we will use Material UI. Run the following command and ignore any warnings.
 
 ```bash
+## install material-ui
 npm install --save @material-ui/core
+
+## install required font
+npm install typeface-roboto --save
 ```
 
 ## Start your app
@@ -82,4 +87,27 @@ We want to keep the app preview running so we will open a new terminal to work w
 ## Open preview window in new browser tab
 
 
+## Clean up src/app.js 
+Use the src/app.js file @todo
 
+## Initialize amplify
+
+1. In the project source directory run the  ```bash amplify init``` command.
+ 
+2. Press Enter to accept the default project name (should be ‘bia-workshop-app’)
+
+3. Enter ‘dev’ for the environment name
+
+4. Select ‘None’ for the default editor (we’re using Cloud9)
+
+5. Choose JavaScript and React when prompted
+
+6. Accept the default values for src/build paths 
+
+7. Accept the default values for  build/start commands
+
+8. Press Enter to accept the default value (Y) to use AWS profile
+
+9. Press Enter to select the default AWS profile 
+
+@todo add here amplify-settings.png
