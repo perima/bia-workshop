@@ -92,7 +92,7 @@ Replace the contents of src/app.js file with the following
 ```javascript
 /**
  * 
- * Building Intelligent Applications Worksgop
+ * Building Intelligent Applications Workshop
  * 
  */
 
@@ -164,3 +164,59 @@ Please note building the backend resources may take a couple of minutes.
 
 # Add Amplify npm dependencies
  ```npm install --save aws-amplify aws-amplify-react ```
+ 
+## Import amplify packages in our app.
+Time to replace the contents of src/app.js one more time to 
+
+Import and configure the AWS Amplify JS library
+
+Import the withAuthenticator higher order component from aws-amplify-react
+
+Wrapp the App component using withAuthenticator
+
+
+```javascript
+/**
+ * 
+ * Building Intelligent Applications Workshop
+ * 
+ */
+
+import React, { Component } from 'react';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container';
+import 'typeface-roboto';
+
+import Amplify from 'aws-amplify';
+import aws_exports from './aws-exports';
+import { withAuthenticator } from 'aws-amplify-react';
+Amplify.configure(aws_exports); // aws-exports.js file is managed by AWS Amplify
+
+class App extends Component { 
+    render() { 
+        return (
+            <React.Fragment>
+            <CssBaseline />
+            <Container maxWidth="sm">
+              <Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '100vh' }} >
+                Unicorns are real!
+              </Typography>
+            </Container>
+          </React.Fragment>
+        );
+    }
+}
+
+export default withAuthenticator(App, {includeGreetings: true});
+```
+
+## Create an account in the app
+Once you saved the new contents of app.js, your preview tab should refresh and display a login. 
+Its time to register (with a valid email address) to use the app. Enter the validation code
+received in your inbox to complete the registration and login.
+
+We now have working authentation for our app :-) 
+
+
+

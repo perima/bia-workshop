@@ -1,6 +1,6 @@
 /**
  * 
- * Building Intelligent Applications Worksgop
+ * Building Intelligent Applications Workshop
  * 
  */
 
@@ -9,6 +9,11 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import 'typeface-roboto';
+
+import Amplify from 'aws-amplify';
+import aws_exports from './aws-exports';
+import { withAuthenticator } from 'aws-amplify-react';
+Amplify.configure(aws_exports); // aws-exports.js file is managed by AWS Amplify
 
 class App extends Component { 
     render() { 
@@ -25,4 +30,4 @@ class App extends Component {
     }
 }
 
-export default App;
+export default withAuthenticator(App, {includeGreetings: true});
