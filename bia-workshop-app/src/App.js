@@ -13,7 +13,10 @@ import 'typeface-roboto';
 import Amplify from 'aws-amplify';
 import aws_exports from './aws-exports';
 import { withAuthenticator } from 'aws-amplify-react';
+import Predictions, { AmazonAIPredictionsProvider } from '@aws-amplify/predictions';
+
 Amplify.configure(aws_exports); // aws-exports.js file is managed by AWS Amplify
+Amplify.addPluggable(new AmazonAIPredictionsProvider());
 
 class App extends Component { 
     render() { 

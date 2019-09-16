@@ -218,5 +218,78 @@ received in your inbox to complete the registration and login.
 
 We now have working authentation for our app :-) 
 
+# Amazon Rekognition
 
+## Configure backend for Rekognition
+The first AI service we will add to our application is Amazon Rekognition.
 
+In your terminal run the command ```amplify add predictions``` to automatically create the backend configuration.
+
+Please give the following answers to the questions when prompted:
+
+*Please select from one of the categories below* **Identify**
+
+*What would you like to identify?* **Identify Labels**
+
+*Provide a friendly name for your resource* **[Press Enter to accept the default value]**
+
+*Would you like use the default configuration?* **Default Configuration**
+
+*Who should have access?* **Auth users only**
+
+We are now ready to publish our backend by running the command ```amplify push``` and press Enter when asked if you would like to proceed.
+
+## Modify the app.js file to include predictions
+
+We now need to import the predictions packages. 
+
+```javascript 
+import Predictions, { AmazonAIPredictionsProvider } from '@aws-amplify/predictions';
+```
+
+and
+
+```javascript
+Amplify.addPluggable(new AmazonAIPredictionsProvider());
+```
+
+Your src.app.js file should look like the below
+
+```javascript
+/**
+ * 
+ * Building Intelligent Applications Workshop
+ * 
+ */
+
+import React, { Component } from 'react';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container';
+import 'typeface-roboto';
+
+import Amplify from 'aws-amplify';
+import aws_exports from './aws-exports';
+import { withAuthenticator } from 'aws-amplify-react';
+import Predictions, { AmazonAIPredictionsProvider } from '@aws-amplify/predictions';
+
+Amplify.configure(aws_exports); // aws-exports.js file is managed by AWS Amplify
+Amplify.addPluggable(new AmazonAIPredictionsProvider());
+
+class App extends Component { 
+    render() { 
+        return (
+            <React.Fragment>
+            <CssBaseline />
+            <Container maxWidth="sm">
+              <Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '100vh' }} >
+                Unicorns are real!
+              </Typography>
+            </Container>
+          </React.Fragment>
+        );
+    }
+}
+
+export default withAuthenticator(App, {includeGreetings: true});
+```
