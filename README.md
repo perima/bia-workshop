@@ -241,8 +241,15 @@ We are now ready to publish our backend by running the command ```amplify push``
 
 ## Modify the app.js file to include predictions
 
-We now need to import the predictions packages. 
+We now need to create the predictions components. 
 
+## create the LabelsIdentification component
+
+Create a file called LabelsIdentification.js and add the following file
+
+
+
+## update app.js to use the new LabelsIdentification component.
 ```javascript 
 import Predictions, { AmazonAIPredictionsProvider } from '@aws-amplify/predictions';
 ```
@@ -293,3 +300,5 @@ class App extends Component {
 
 export default withAuthenticator(App, {includeGreetings: true});
 ```
+
+

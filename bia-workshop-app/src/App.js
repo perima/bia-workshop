@@ -13,10 +13,11 @@ import 'typeface-roboto';
 import Amplify from 'aws-amplify';
 import aws_exports from './aws-exports';
 import { withAuthenticator } from 'aws-amplify-react';
-import Predictions, { AmazonAIPredictionsProvider } from '@aws-amplify/predictions';
+
+import LabelsIdentification from './LabelsIdentification'
 
 Amplify.configure(aws_exports); // aws-exports.js file is managed by AWS Amplify
-Amplify.addPluggable(new AmazonAIPredictionsProvider());
+
 
 class App extends Component { 
     render() { 
@@ -26,6 +27,7 @@ class App extends Component {
             <Container maxWidth="sm">
               <Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '100vh' }} >
                 Unicorns are real!
+                  <LabelsIdentification />
               </Typography>
             </Container>
           </React.Fragment>
