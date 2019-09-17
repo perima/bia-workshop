@@ -1,0 +1,16 @@
+{
+    "resourceName": "identifyText6aeb9ff5",
+    "identifyPolicyName": "identifyPolicy6aeb9ff5",
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "adminAuthProtected": "DISALLOW",
+    "adminGuestProtected": "DISALLOW",
+    "identifyType": "identifyText",
+    "identifyDoc": true,
+    "access": "auth",
+    "format": "ALL"
+}

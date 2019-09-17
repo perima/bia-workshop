@@ -12,6 +12,12 @@
 			"service": "Rekognition",
 			"dependsOn": [],
 			"identifyType": "identifyLabels"
+		},
+		"identifyText6aeb9ff5": {
+			"providerPlugin": "awscloudformation",
+			"service": "RekognitionAndTextract",
+			"dependsOn": [],
+			"identifyType": "identifyText"
 		}
 	}
 }

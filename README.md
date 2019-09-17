@@ -250,7 +250,6 @@ Create a file called src/LabelsIdentification.js and add the following content
 
 ```javascript 
 import React, { useState } from 'react';
-import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import Predictions, { AmazonAIPredictionsProvider } from '@aws-amplify/predictions';
 import Amplify from 'aws-amplify';
 import TextField from '@material-ui/core/TextField';
@@ -357,4 +356,21 @@ class App extends Component {
 export default withAuthenticator(App, {includeGreetings: true});
 ```
 
+# Amazon Textract
+
+Run the command ```amplify add predictions```
+
+Answer the questions in the following way
+
+*? Please select from one of the categories below* **Identify**
+
+*? What would you like to identify?* **Identify Text**
+
+*? Provide a friendly name for your resource identify* **[Press Enter to select the suggested name]**
+
+*? Would you also like to identify documents?* **Yes**
+
+*? Who should have access?* **Auth users only**
+
+Run the command ```amplify push``` to update our cloud backend and select Yes when asked if you want to continue.
 

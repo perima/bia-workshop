@@ -15,6 +15,7 @@ import aws_exports from './aws-exports';
 import { withAuthenticator } from 'aws-amplify-react';
 
 import LabelsIdentification from './LabelsIdentification'
+import TextIdentification from './TextIdentification';
 
 Amplify.configure(aws_exports); // aws-exports.js file is managed by AWS Amplify
 
@@ -25,9 +26,10 @@ class App extends Component {
             <React.Fragment>
             <CssBaseline />
             <Container>
-              <Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '100vh' }} >
+              <Typography component="div" >
                 Unicorns are real!
                   <LabelsIdentification />
+                  <TextIdentification />
               </Typography>
             </Container>
           </React.Fragment>
