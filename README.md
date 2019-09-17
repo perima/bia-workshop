@@ -249,78 +249,77 @@ Create a file called src/LabelsIdentification.js and add the following content
 
 
 ```javascript 
+
+/**
+ * 
+ * Building Intelligent Applications Workshop
+ * 
+ * src/LabelsIdentification.js
+ * 
+ */
 import React, { useState } from 'react';
 import Predictions, { AmazonAIPredictionsProvider } from '@aws-amplify/predictions';
 import Amplify from 'aws-amplify';
-import TextField from '@material-ui/core/TextField';
 
 Amplify.addPluggable(new AmazonAIPredictionsProvider());
 
-function LabelsIdentification() {
-  const [response, setResponse] = useState("Select a file and click upload for test ");
-
+function LabelsIdentification(props) {
+  
   function identifyFromFile(event) {
-    setResponse(JSON.stringify('please wait', null, 2));
+    props.parentCallback('please wait, calling rekognition');
     const { target: { files } } = event;
-    const [file,] = files || [];
+    const [file, ] = files || [];
 
     if (!file) {
       return;
     }
     Predictions.identify({
-      labels: {
-        source: {
-          file,
-        },
-        type: "ALL" // "LABELS" will detect objects , "UNSAFE" will detect if content is not safe, "ALL" will do both default on aws-exports.js
-      }
-    }).then(result => setResponse(JSON.stringify(result, null, 2)))
-      .catch(err => setResponse(JSON.stringify(err, null, 2)))
+        labels: {
+          source: {
+            file,
+          },
+          type: "ALL" // "LABELS" will detect objects , "UNSAFE" will detect if content is not safe, "ALL" will do both default on aws-exports.js
+        }
+    }).then(result => {
+      props.parentCallback(JSON.stringify(result, null, 2));
+    })
+      .catch(err => {
+         props.parentCallback(JSON.stringify(err, null, 2));
+      });
   }
 
   return (
     <div className="Text">
-      <div>
         <h3>Labels identification</h3>
         <input type="file" onChange={identifyFromFile}></input>
-        <br/>
-       
-
-<TextField
-        id="outlined-multiline-flexible"
-        label="Rekognition output"
-        multiline
-        fullWidth
-        rows="30"
-        value={response}
-        margin="normal"
-        variant="outlined"
-      />
-      </div>
     </div>
   );
 }
 
 export default (LabelsIdentification);
+
 ```
 
 ## update app.js to use the new LabelsIdentification component.
 ```javascript 
-import Predictions, { AmazonAIPredictionsProvider } from '@aws-amplify/predictions';
+import LabelsIdentification from './LabelsIdentification' //rekognition
 ```
 
 and
 
 ```javascript
-Amplify.addPluggable(new AmazonAIPredictionsProvider());
+ <LabelsIdentification  parentCallback={this.callbackFunction} />
 ```
 
 Your src.app.js file should look like the below
 
 ```javascript
+
 /**
  * 
  * Building Intelligent Applications Workshop
+ * 
+ * src.app.js
  * 
  */
 
@@ -328,32 +327,55 @@ import React, { Component } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import TextField from '@material-ui/core/TextField';
 import 'typeface-roboto';
 
 import Amplify from 'aws-amplify';
 import aws_exports from './aws-exports';
 import { withAuthenticator } from 'aws-amplify-react';
-import Predictions, { AmazonAIPredictionsProvider } from '@aws-amplify/predictions';
+
+import LabelsIdentification from './LabelsIdentification' //rekognition
 
 Amplify.configure(aws_exports); // aws-exports.js file is managed by AWS Amplify
-Amplify.addPluggable(new AmazonAIPredictionsProvider());
 
-class App extends Component { 
-    render() { 
-        return (
-            <React.Fragment>
+
+class App extends Component {
+  
+  state = { response: "please wait" }
+  
+  
+    callbackFunction = (childData) => {
+      console.log('parent state');
+          this.setState({response: childData});
+    }
+  
+  render() {
+    return (
+      <React.Fragment>
             <CssBaseline />
-            <Container maxWidth="sm">
-              <Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '100vh' }} >
+            <Container>
+              <Typography component="div" >
                 Unicorns are real!
+                  <LabelsIdentification  parentCallback={this.callbackFunction} />
               </Typography>
+               <TextField
+                id="outlined-multiline-flexible"
+                label="output"
+                multiline
+                fullWidth
+                rows="30"
+                value={this.state.response}
+                margin="normal"
+                variant="outlined"
+              />
             </Container>
           </React.Fragment>
-        );
-    }
+    );
+  }
 }
 
-export default withAuthenticator(App, {includeGreetings: true});
+export default withAuthenticator(App, { includeGreetings: true });
+
 ```
 
 # Amazon Textract
@@ -374,3 +396,138 @@ Answer the questions in the following way
 
 Run the command ```amplify push``` to update our cloud backend and select Yes when asked if you want to continue.
 
+## Create the text identification component 
+
+```javascript
+
+/**
+ * 
+ * Building Intelligent Applications Workshop
+ * 
+ * src/TextIdentification.js
+ * 
+ */
+import React, { useState } from 'react';
+import Amplify, { Storage, Predictions } from 'aws-amplify';
+import awsconfig from './aws-exports';
+
+function TextIdentification(props) {
+
+  function identifyFromFile(event) {
+     props.parentCallback('please wait, using textract to identify text');
+    const { target: { files } } = event;
+    const [file,] = files || [];
+
+    if (!file) {
+      return;
+    }
+    Predictions.identify({
+      text: {
+        source: {
+          file,
+        },
+        format: "ALL", // Available options "PLAIN", "FORM", "TABLE", "ALL"
+      }
+    }).then(({text: { fullText }}) => {
+      props.parentCallback(fullText);
+    })
+     .catch(err => {
+         props.parentCallback(JSON.stringify(err, null, 2));
+      });
+  }
+
+  return (
+    <div className="Text">
+        <h3>Text identification</h3>
+        <input type="file" onChange={identifyFromFile}></input>
+    </div>
+  );
+}
+
+export default (TextIdentification);
+
+```
+
+## Import the new react component into app.js
+
+add to your imports at the top of the filq
+
+```javascript 
+import TextIdentification from './TextIdentification'; //textract 
+```
+
+add the component in the render function 
+
+```javascript 
+<TextIdentification parentCallback={this.callbackFunction} /> 
+```
+
+your app.js shoud look like the one below
+
+```javascript
+
+/**
+ * 
+ * Building Intelligent Applications Workshop
+ * 
+ * src.app.js
+ * 
+ */
+
+import React, { Component } from 'react';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container';
+import TextField from '@material-ui/core/TextField';
+import 'typeface-roboto';
+
+import Amplify from 'aws-amplify';
+import aws_exports from './aws-exports';
+import { withAuthenticator } from 'aws-amplify-react';
+
+import LabelsIdentification from './LabelsIdentification' //rekognition
+import TextIdentification from './TextIdentification'; //textract
+
+Amplify.configure(aws_exports); // aws-exports.js file is managed by AWS Amplify
+
+
+class App extends Component {
+  
+  state = { response: "please wait" }
+  
+  
+    callbackFunction = (childData) => {
+      console.log('parent state');
+          this.setState({response: childData});
+    }
+  
+  render() {
+    return (
+      <React.Fragment>
+            <CssBaseline />
+            <Container>
+              <Typography component="div" >
+                Unicorns are real!
+                  <LabelsIdentification  parentCallback={this.callbackFunction} />
+                  <TextIdentification parentCallback={this.callbackFunction} />
+              </Typography>
+               <TextField
+                id="outlined-multiline-flexible"
+                label="output"
+                multiline
+                fullWidth
+                rows="30"
+                value={this.state.response}
+                margin="normal"
+                variant="outlined"
+              />
+            </Container>
+          </React.Fragment>
+    );
+  }
+}
+
+export default withAuthenticator(App, { includeGreetings: true });
+
+
+```

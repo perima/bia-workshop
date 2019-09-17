@@ -1,18 +1,18 @@
-
+/**
+ * 
+ * Building Intelligent Applications Workshop
+ * 
+ * src/TextIdentification.js
+ * 
+ */
 import React, { useState } from 'react';
-
 import Amplify, { Storage, Predictions } from 'aws-amplify';
-import { AmazonAIPredictionsProvider } from '@aws-amplify/predictions';
-import TextField from '@material-ui/core/TextField';
-
-
 import awsconfig from './aws-exports';
 
-function TextIdentification() {
-  const [response, setResponse] = useState("You can add a photo by uploading direcly from the app. For this workshop please use jpg/png which support syncronous processing. ")
+function TextIdentification(props) {
 
   function identifyFromFile(event) {
-    setResponse('identifiying text...');
+     props.parentCallback('please wait, using textract to identify text');
     const { target: { files } } = event;
     const [file,] = files || [];
 
@@ -27,27 +27,17 @@ function TextIdentification() {
         format: "ALL", // Available options "PLAIN", "FORM", "TABLE", "ALL"
       }
     }).then(({text: { fullText }}) => {
-      setResponse(fullText)
+      props.parentCallback(fullText);
     })
-      .catch(err => setResponse(JSON.stringify(err, null, 2)))
+     .catch(err => {
+         props.parentCallback(JSON.stringify(err, null, 2));
+      });
   }
 
   return (
     <div className="Text">
-      <div>
         <h3>Text identification</h3>
         <input type="file" onChange={identifyFromFile}></input>
-         <TextField
-                id="outlined-multiline-flexible"
-                label="Textract output"
-                multiline
-                fullWidth
-                rows="30"
-                value={response}
-                margin="normal"
-                variant="outlined"
-              />
-      </div>
     </div>
   );
 }
