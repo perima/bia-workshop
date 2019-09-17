@@ -1,13 +1,17 @@
 
 import React, { useState } from 'react';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import Predictions, { AmazonAIPredictionsProvider } from '@aws-amplify/predictions';
 import Amplify from 'aws-amplify';
+import TextField from '@material-ui/core/TextField';
+
 Amplify.addPluggable(new AmazonAIPredictionsProvider());
 
 function LabelsIdentification() {
-  const [response, setResponse] = useState("Click upload for test ");
+  const [response, setResponse] = useState("Select a file and click upload for test ");
 
   function identifyFromFile(event) {
+    setResponse(JSON.stringify('please wait', null, 2));
     const { target: { files } } = event;
     const [file,] = files || [];
 
@@ -30,7 +34,19 @@ function LabelsIdentification() {
       <div>
         <h3>Labels identification</h3>
         <input type="file" onChange={identifyFromFile}></input>
-        <p>{response}</p>
+        <br/>
+       
+
+<TextField
+        id="outlined-multiline-flexible"
+        label="Rekognition output"
+        multiline
+        fullWidth
+        rows="30"
+        value={response}
+        margin="normal"
+        variant="outlined"
+      />
       </div>
     </div>
   );

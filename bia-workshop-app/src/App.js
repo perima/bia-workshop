@@ -24,7 +24,7 @@ class App extends Component {
         return (
             <React.Fragment>
             <CssBaseline />
-            <Container maxWidth="sm">
+            <Container>
               <Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '100vh' }} >
                 Unicorns are real!
                   <LabelsIdentification />
