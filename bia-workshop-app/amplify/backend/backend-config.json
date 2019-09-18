@@ -18,6 +18,11 @@
 			"service": "RekognitionAndTextract",
 			"dependsOn": [],
 			"identifyType": "identifyText"
+		},
+		"transcription47c7e06e": {
+			"providerPlugin": "awscloudformation",
+			"service": "Transcribe",
+			"convertType": "transcription"
 		}
 	}
 }

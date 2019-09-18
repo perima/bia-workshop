@@ -531,3 +531,167 @@ export default withAuthenticator(App, { includeGreetings: true });
 
 
 ```
+
+
+# Amazon Transcribe
+
+run ```amplify add predictions```
+
+and select the following answers when prompted
+
+
+*Please select from one of the categories below* **Convert**
+
+*What would you like to convert?* ** Transcribe text from audio **
+
+*Provide a friendly name for your resource* **[Press Enter to select suggested default name]**
+
+*What is the source language?* **British English** - or select desired supported language from the available list
+
+*Who should have access?* **Auth users only**
+
+run ```amplify push``` to publish your backend changes to the cloud. Select **Y** when asked if you are sure you want to continue.
+
+## Add mic capture to our react application
+
+In your terminal, run the following command ```npm install --save microphone-stream``` to add mic audio capture capability to our application.
+
+## Create component to handle audio capture and transcription ## 
+
+create file ```src/SpeechToText.js```
+
+```javascript 
+
+/**
+ * 
+ * Building Intelligent Applications Workshop
+ * 
+ * src/SpeechToText.js
+ * 
+ */
+import React, { useState } from 'react';
+
+import Amplify, { Storage, Predictions } from 'aws-amplify';
+import { AmazonAIPredictionsProvider } from '@aws-amplify/predictions';
+
+import awsconfig from './aws-exports';
+
+import mic from 'microphone-stream';
+
+Amplify.configure(awsconfig);
+
+function SpeechToText(props) {
+  const [response, setResponse] = useState("Press 'start recording' to begin your transcription. Press STOP recording once you finish speaking.");
+  
+  function AudioRecorder(props) {
+    const [recording, setRecording] = useState(false);
+    const [micStream, setMicStream] = useState();
+    const [audioBuffer] = useState(
+      (function() {
+        let buffer = [];
+        function add(raw) {
+          buffer = buffer.concat(...raw);
+          return buffer;
+        }
+        function newBuffer() {
+          console.log("reseting buffer");
+          buffer = [];
+        }
+ 
+        return {
+          reset: function() {
+            newBuffer();
+          },
+          addData: function(raw) {
+            return add(raw);
+          },
+          getData: function() {
+            return buffer;
+          }
+        };
+      })()
+    );
+
+    async function startRecording() {
+      console.log('start recording');
+      audioBuffer.reset();
+
+      window.navigator.mediaDevices.getUserMedia({ video: false, audio: true }).then((stream) => {
+        const startMic = new mic();
+
+        startMic.setStream(stream);
+        startMic.on('data', (chunk) => {
+          var raw = mic.toRaw(chunk);
+          if (raw == null) {
+            return;
+          }
+          audioBuffer.addData(raw);
+
+        });
+
+        setRecording(true);
+        setMicStream(startMic);
+      });
+    }
+
+    async function stopRecording() {
+      console.log('stop recording');
+      const { finishRecording } = props;
+
+      micStream.stop();
+      setMicStream(null);
+      setRecording(false);
+
+      const resultBuffer = audioBuffer.getData();
+
+      if (typeof finishRecording === "function") {
+        finishRecording(resultBuffer);
+      }
+
+    }
+
+    return (
+      <div className="audioRecorder">
+        <div>
+          {recording && <button onClick={stopRecording}>Stop recording</button>}
+          {!recording && <button onClick={startRecording}>Start recording</button>}
+        </div>
+      </div>
+    );
+  }
+
+  function convertFromBuffer(bytes) {
+      console.log('bytes', bytes);
+    setResponse('Converting text...');
+     props.parentCallback('Converting text...');
+    
+    Predictions.convert({
+      transcription: {
+        source: {
+          bytes
+        },
+         language: "en-GB", // other options are "en-US", "fr-FR", "fr-CA", "es-US"
+      },
+    }).then(({ transcription: { fullText } }) => {
+        console.log('fulltext', fullText);
+        setResponse(fullText);
+         props.parentCallback(fullText);
+    })
+      .catch(err => {
+          console.log(err);
+          setResponse(JSON.stringify(err, null, 2));
+           props.parentCallback(JSON.stringify(err, null, 2));
+      });
+  }
+
+  return (
+    <div className="Text">
+        <h3>Speech to text</h3>
+        <AudioRecorder finishRecording={convertFromBuffer} />
+    </div>
+  );
+}
+
+export default (SpeechToText);
+
+```

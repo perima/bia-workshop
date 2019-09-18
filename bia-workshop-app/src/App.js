@@ -17,8 +17,9 @@ import Amplify from 'aws-amplify';
 import aws_exports from './aws-exports';
 import { withAuthenticator } from 'aws-amplify-react';
 
-import LabelsIdentification from './LabelsIdentification' //rekognition
+import LabelsIdentification from './LabelsIdentification'; //rekognition
 import TextIdentification from './TextIdentification'; //textract
+import SpeechToText from './SpeechToText'; // transcribe
 
 Amplify.configure(aws_exports); // aws-exports.js file is managed by AWS Amplify
 
@@ -42,6 +43,7 @@ class App extends Component {
                 Unicorns are real!
                   <LabelsIdentification  parentCallback={this.callbackFunction} />
                   <TextIdentification parentCallback={this.callbackFunction} />
+                  <SpeechToText parentCallback={this.callbackFunction} />
               </Typography>
                <TextField
                 id="outlined-multiline-flexible"
