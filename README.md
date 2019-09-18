@@ -22,7 +22,8 @@
 3. Close welcome screen
 4. Open new terminal 
 
-@todo add here the screenshot with instructions
+
+![alt text](https://raw.githubusercontent.com/perima/bia-workshop/master/images/cloud9-tidy-1024.png "Tidy up cloud9 workspace")
 
 ## 1.4. Install & update your workspace.
 Run the following commands 
