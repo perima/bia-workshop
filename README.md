@@ -797,7 +797,7 @@ Run the command ```amplify push``` to publish your changes to the cloud backend.
 You will need to go to the Lex console https://us-west-2.console.aws.amazon.com/lex/home to get the name of your newly created
 flower chatbot. 
 
-@todo add screenshot 
+![alt text](https://raw.githubusercontent.com/perima/bia-workshop/master/images/chatbot-console.png "Tidy up cloud9 workspace")
 
 ## create the react component for our chatbot 
 ```javascript
