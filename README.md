@@ -142,7 +142,7 @@ export default App;
 
 9. Press Enter to select the default AWS profile 
 
-@todo add here amplify-settings.png
+![alt text](https://raw.githubusercontent.com/perima/bia-workshop/master/images/amplify-settings.png "Tidy up cloud9 workspace")
 
 # Add Authentication
 We will start by adding authentation to our app.
