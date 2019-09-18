@@ -2,7 +2,7 @@
  * 
  * Building Intelligent Applications Workshop
  * 
- * src.app.js
+ * src/app.js
  * 
  */
 
@@ -21,6 +21,7 @@ import LabelsIdentification from './LabelsIdentification'; //rekognition
 import TextIdentification from './TextIdentification'; //textract
 import SpeechToText from './SpeechToText'; // transcribe
 import TextInterpretation from './TextInterpretation'; // comprehend
+import MyChatbox from './MyChatbox.js'; // lex
 
 Amplify.configure(aws_exports); // aws-exports.js file is managed by AWS Amplify
 
@@ -46,6 +47,7 @@ class App extends Component {
                   <TextIdentification parentCallback={this.callbackFunction} />
                   <SpeechToText parentCallback={this.callbackFunction} />
                   <TextInterpretation parentCallback={this.callbackFunction} />
+                  <MyChatbox />
               </Typography>
                <TextField
                 id="outlined-multiline-flexible"

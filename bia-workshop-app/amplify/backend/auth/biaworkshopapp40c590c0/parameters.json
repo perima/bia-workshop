@@ -1,6 +1,6 @@
 {
     "identityPoolName": "biaworkshopapp40c590c0_identitypool_40c590c0",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "biawor40c590c0",
     "userPoolName": "biaworkshopapp40c590c0_userpool_40c590c0",
     "autoVerifiedAttributes": [

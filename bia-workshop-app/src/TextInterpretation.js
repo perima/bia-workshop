@@ -6,7 +6,6 @@
  * 
  */
 import React, { useState } from 'react';
-import './App.css';
 import Amplify, { Storage, Predictions } from 'aws-amplify';
 import { AmazonAIPredictionsProvider } from '@aws-amplify/predictions';
 

@@ -311,7 +311,7 @@ and
  <LabelsIdentification  parentCallback={this.callbackFunction} />
 ```
 
-Your src.app.js file should look like the below
+Your src/app.js file should look like the below
 
 ```javascript
 
@@ -319,7 +319,7 @@ Your src.app.js file should look like the below
  * 
  * Building Intelligent Applications Workshop
  * 
- * src.app.js
+ * src/app.js
  * 
  */
 
@@ -470,7 +470,7 @@ your app.js shoud look like the one below
  * 
  * Building Intelligent Applications Workshop
  * 
- * src.app.js
+ * src/app.js
  * 
  */
 
@@ -727,7 +727,6 @@ It's now time to publish our backend changes to the cloud. Run ```amplify push``
  * 
  */
 import React, { useState } from 'react';
-import './App.css';
 import Amplify, { Storage, Predictions } from 'aws-amplify';
 import { AmazonAIPredictionsProvider } from '@aws-amplify/predictions';
 
@@ -771,3 +770,183 @@ function TextInterpretation(props) {
 export default (TextInterpretation);
 
 ```
+
+# Amazon Lex
+
+It's time to add a chatbot to our app. 
+
+Start by running the command ```amplify add interactions``` in the terminal.
+
+Answer the questions as per below when prompted 
+
+*Provide a friendly resource name that will be used to label this category in the project:* **[Press Enter to accept the suggested name]**
+
+*Would you like to start with a sample chatbot, import a chatbot, or start from scratch?* **Start with a sample**
+
+*Choose a sample chatbot:* **OrderFlowers**
+
+*Please indicate if your use of this bot is subject to the Children's Online Privacy Protection Act (COPPA).*
+*Learn more: https://www.ftc.gov/tips-advice/business-center/guidance/complying-coppa-frequently-asked-questions* **No**
+
+Run the command ```amplify push``` to publish your changes to the cloud backend. Answer **Y** when asked if you are sure you want to do so.
+
+
+## Add the react component for our chatbot 
+
+You will need to go to the Lex console https://us-west-2.console.aws.amazon.com/lex/home to get the name of your newly created
+flower chatbot. 
+
+@todo add screenshot 
+
+## create the react component for our chatbot 
+```javascript
+/**
+ * 
+ * Building Intelligent Applications Workshop
+ * 
+ * src/MyChatbox.js
+ * 
+ */
+import React, { Component } from 'react';
+import Amplify, { Interactions } from 'aws-amplify';
+import { ChatBot, AmplifyTheme } from 'aws-amplify-react';
+import awsconfig from './aws-exports';
+
+Amplify.configure(awsconfig);
+
+// Imported default theme can be customized by overloading attributes
+const myTheme = {
+  ...AmplifyTheme,
+  sectionHeader: {
+    ...AmplifyTheme.sectionHeader,
+    backgroundColor: '#ff6600'
+  }
+};
+
+class MyChatbox extends Component {
+
+  handleComplete(err, confirmation) {
+    if (err) {
+      alert('Bot conversation failed')
+      return;
+    }
+
+    alert('Success: ' + JSON.stringify(confirmation, null, 2));
+    return 'Trip booked. Thank you! what would you like to do next?';
+  }
+
+  render() {
+    return (
+        <ChatBot
+          title="My workshop demo chatbot"
+          theme={myTheme}
+          botName="replace_this_with_your_own_bot_name_from_console"
+          welcomeMessage="Welcome, how can I help you today?"
+          onComplete={this.handleComplete.bind(this)}
+          clearOnComplete={true}
+          conversationModeOn={false}
+        />
+    );
+  }
+}
+
+export default MyChatbox;
+```
+
+## Add the chatbot component to your app.js 
+
+you need to import the newly created component 
+
+```javascript
+import MyChatbox from './MyChatbox.js'; // lex
+```
+
+and add the component in your render method 
+
+```javascript 
+ <TextField
+                id="outlined-multiline-flexible"
+                label="output"
+                multiline
+                fullWidth
+                rows="30"
+                value={this.state.response}
+                margin="normal"
+                variant="outlined"
+              />
+```
+
+Your src/app.js file should like the one below
+
+```javascript 
+/**
+ * 
+ * Building Intelligent Applications Workshop
+ * 
+ * src/app.js
+ * 
+ */
+
+import React, { Component } from 'react';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container';
+import TextField from '@material-ui/core/TextField';
+import 'typeface-roboto';
+
+import Amplify from 'aws-amplify';
+import aws_exports from './aws-exports';
+import { withAuthenticator } from 'aws-amplify-react';
+
+import LabelsIdentification from './LabelsIdentification'; //rekognition
+import TextIdentification from './TextIdentification'; //textract
+import SpeechToText from './SpeechToText'; // transcribe
+import TextInterpretation from './TextInterpretation'; // comprehend
+import MyChatbox from './MyChatbox.js'; // lex
+
+Amplify.configure(aws_exports); // aws-exports.js file is managed by AWS Amplify
+
+
+class App extends Component {
+  
+  state = { response: "please wait" }
+  
+  
+    callbackFunction = (childData) => {
+      console.log('parent state');
+          this.setState({response: childData});
+    }
+  
+  render() {
+    return (
+      <React.Fragment>
+            <CssBaseline />
+            <Container>
+              <Typography component="div" >
+                Unicorns are real!
+                  <LabelsIdentification  parentCallback={this.callbackFunction} />
+                  <TextIdentification parentCallback={this.callbackFunction} />
+                  <SpeechToText parentCallback={this.callbackFunction} />
+                  <TextInterpretation parentCallback={this.callbackFunction} />
+                  <MyChatbox />
+              </Typography>
+               <TextField
+                id="outlined-multiline-flexible"
+                label="output"
+                multiline
+                fullWidth
+                rows="30"
+                value={this.state.response}
+                margin="normal"
+                variant="outlined"
+              />
+            </Container>
+          </React.Fragment>
+    );
+  }
+}
+
+export default withAuthenticator(App, { includeGreetings: true });
+```
+
+

@@ -29,5 +29,12 @@
 			"service": "Comprehend",
 			"interpretType": "interpretText"
 		}
+	},
+	"interactions": {
+		"lex640b3f3f": {
+			"service": "Lex",
+			"providerPlugin": "awscloudformation",
+			"build": true
+		}
 	}
 }

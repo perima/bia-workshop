@@ -1,0 +1,51 @@
+{
+    "resourceName": "lex640b3f3f",
+    "intents": [
+        {
+            "cancelMessage": "Okay, I will not place your order.",
+            "confirmationQuestion": "Okay, your {FlowerType} will be ready for pickup by {PickupTime} on {PickupDate}. Does this sound okay?",
+            "slots": [
+                {
+                    "name": "FlowerType",
+                    "type": "FlowerTypes",
+                    "prompt": "What type of flowers would you like to order?",
+                    "required": true,
+                    "customType": true
+                },
+                {
+                    "name": "PickupDate",
+                    "type": "AMAZON.DATE",
+                    "prompt": "What day do you want the {FlowerType} to be picked up?",
+                    "required": true,
+                    "customType": false
+                },
+                {
+                    "name": "PickupTime",
+                    "type": "AMAZON.TIME",
+                    "prompt": "At what time do you want the {FlowerType} to be picked up?",
+                    "required": true,
+                    "customType": false
+                }
+            ],
+            "utterances": [
+                "I would like to order some flowers",
+                "I would like to pick up flowers"
+            ],
+            "intentName": "OrderFlowers",
+            "newSlotTypes": [
+                {
+                    "slotType": "FlowerTypes",
+                    "slotTypeDescription": "Types of flowers to pick up",
+                    "slotValues": [
+                        "tulips",
+                        "lillies",
+                        "roses"
+                    ]
+                }
+            ]
+        }
+    ],
+    "outputVoice": "Matthew",
+    "botName": "OrderFlowers",
+    "coppa": false
+}
