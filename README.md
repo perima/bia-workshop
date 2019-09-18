@@ -695,3 +695,9 @@ function SpeechToText(props) {
 export default (SpeechToText);
 
 ```
+
+
+# Amazon Comprehend 
+
+Run ```amplify add predictions```
+

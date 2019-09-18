@@ -20,6 +20,7 @@ import { withAuthenticator } from 'aws-amplify-react';
 import LabelsIdentification from './LabelsIdentification'; //rekognition
 import TextIdentification from './TextIdentification'; //textract
 import SpeechToText from './SpeechToText'; // transcribe
+import TextInterpretation from './TextInterpretation'; // comprehend
 
 Amplify.configure(aws_exports); // aws-exports.js file is managed by AWS Amplify
 
@@ -44,6 +45,7 @@ class App extends Component {
                   <LabelsIdentification  parentCallback={this.callbackFunction} />
                   <TextIdentification parentCallback={this.callbackFunction} />
                   <SpeechToText parentCallback={this.callbackFunction} />
+                  <TextInterpretation parentCallback={this.callbackFunction} />
               </Typography>
                <TextField
                 id="outlined-multiline-flexible"

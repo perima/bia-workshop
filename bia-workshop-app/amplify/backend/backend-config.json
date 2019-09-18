@@ -23,6 +23,11 @@
 			"providerPlugin": "awscloudformation",
 			"service": "Transcribe",
 			"convertType": "transcription"
+		},
+		"interpretTexte8faf23c": {
+			"providerPlugin": "awscloudformation",
+			"service": "Comprehend",
+			"interpretType": "interpretText"
 		}
 	}
 }
