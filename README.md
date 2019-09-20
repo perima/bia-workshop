@@ -2,21 +2,38 @@
 
 # Building Intelligent Applications workshop.
 
-## 1. About this workshop
+
+## About this workshop
+This workshop will guide you through creating a single page application leveraging a number of AWS AI services. 
+
+We will write our single page application in [React](https://reactjs.org/) and combine it with [AWS Amplify](https://aws-amplify.github.io) to create and connect to the serverless backend. Finally, we will use [AWS Cloud9](https://aws.amazon.com/cloud9/) for our IDE.
+
+We recommend following the steps in this workshop in the order they are presented.
+
+## Goals
+- Build a single page application using React and AWS Amplify.
+- Add & use AWS AI services in the application leveraging a serverless backend.
+
+## Contents
+
+1. Setup development environment
 
 
-# 1. Create Cloud9 Workspace
+# 1. Setup development environment
 
-## 1.2. Create new environment
-1. Go to the Cloud9 web console.
-2. At the top right corner of the console, make sure you’re using one of these regions: Virginia (us-east-1), Oregon (us-west-2), Ireland (eu-west-1) or Singapore (ap-southeast-1)
-3. Select Create environment
+## 1.1 Create new environment
+1.1.1 Go to the [Cloud9 web console](https://us-west-2.console.aws.amazon.com/cloud9/home/product).
+1.1.2. At the top right corner of the console, make sure you’re using one of these regions: Virginia (us-east-1), Oregon (us-west-2), Ireland (eu-west-1) or Singapore (ap-southeast-1).
+1.1.3. Select Create environment
+
+![alt text](https://raw.githubusercontent.com/perima/bia-workshop/master/images/1.1.3.png "select correct region!")
+
 4. Name it BIA-workshop, and go to the Next step
 5. Select Create a new instance for environment (EC2) and pick t2.medium
 6. Leave all of the environment settings as they are, and go to the Next step
 7. Click Create environment
 
-## 1.3. Optimize your Cloud9 workspace
+## 1.2 Optimize your Cloud9 workspace
 1. Switch to dark theme 
 2. Close the lower terminal window 
 3. Close welcome screen
@@ -25,7 +42,7 @@
 
 ![alt text](https://raw.githubusercontent.com/perima/bia-workshop/master/images/cloud9-tidy-1024.png "Tidy up cloud9 workspace")
 
-## 1.4. Install & update your workspace.
+## 1.3 Install & update your workspace.
 Run the following commands 
 
 ```bash
@@ -43,7 +60,7 @@ npm install -g @aws-amplify/cli
 sudo yum install jq -y
 ```
 
-## 1.5. Configure default region
+## 1.4. Configure default region
 
 Configure default AWS region for Amplify CLI, please note we are using us-west-2 for this workshop.
 
@@ -142,7 +159,7 @@ export default App;
 
 9. Press Enter to select the default AWS profile 
 
-![alt text](https://raw.githubusercontent.com/perima/bia-workshop/master/images/amplify-settings.png "Tidy up cloud9 workspace")
+![tidy up](https://raw.githubusercontent.com/perima/bia-workshop/master/images/amplify-settings.png "Tidy up cloud9 workspace")
 
 # Add Authentication
 We will start by adding authentation to our app.
