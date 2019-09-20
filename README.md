@@ -141,9 +141,14 @@ npm start
 
 ## 2.5. Open additional terminal 
 
-We want to keep the app preview running so that we can test our app. We will open one more terminal to use with Amplify CLI going forward.
+2.5.1. We want to keep the app preview running so that we can test our app. We will open one more terminal to use with Amplify CLI going forward.
 
 ![alt text](https://raw.githubusercontent.com/perima/bia-workshop/master/images/2.5.png "open additional terminal")
+
+2.5.2. In the new terminal run the following command to switch to the app directory.
+```bash 
+cd bia-workshop-app/ 
+``` 
 
 ## 2.6 Clean up src/app.js 
 Replace the contents of src/app.js file with the following
