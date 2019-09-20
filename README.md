@@ -151,39 +151,155 @@ cd bia-workshop-app/
 ``` 
 
 ## 2.6 Clean up src/app.js 
-Replace the contents of src/app.js file with the following
+
+2.6.1. Using the navigation on the left of your Cloud9 IDE, expand the file tree and open the file ```bia-workshop/bia-workshop-app/src/App.js```
+
+![alt text](https://raw.githubusercontent.com/perima/bia-workshop/master/images/2.6.1.png "open additional terminal")
+
+2.6.2. Replace the contents of src/app.js file with the below code. Its our entry point for our single page application and contains placeholders for the various components we will be building through out this workshop. 
 
 ```javascript
 /**
  * 
  * Building Intelligent Applications Workshop
  * 
+ * src/app.js
+ * 
  */
 
 import React, { Component } from 'react';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import { makeStyles } from '@material-ui/core/styles';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
+import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
+
 import 'typeface-roboto';
 
-class App extends Component { 
-    render() { 
+
+
+class App extends Component {
+
+    state = { response: "" }
+
+
+    callbackFunction = (childData) => {
+        console.log('parent state');
+        this.setState({ response: childData });
+    }
+
+
+    render() {
+
+        const classes = makeStyles(theme => ({
+            root: {
+                width: '100%',
+            },
+            heading: {
+                fontSize: theme.typography.pxToRem(15),
+                fontWeight: theme.typography.fontWeightRegular,
+            },
+        }));
+
         return (
-            <React.Fragment>
-            <CssBaseline />
-            <Container maxWidth="sm">
-              <Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '100vh' }} >
-               Unicorns are real!
-              </Typography>
-            </Container>
-          </React.Fragment>
+            <div className={classes.root}>
+    
+      <Grid container direction="row" alignItems="flex-start" spacing={2}>
+           
+             <Grid item xs={5}>
+                <Typography className={classes.heading}></Typography>
+                <Typography variant="h4" component="h4" align="center">Building Intelligent Applications Workshop</Typography>
+                    <ExpansionPanel>
+                    <ExpansionPanelSummary
+                      aria-controls="panel1a-content"
+                      id="panel1a-header"
+                    >
+                      <Typography className={classes.heading}>Generate labels for objects in an image</Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                        Add Label Identification component here...
+                    </ExpansionPanelDetails>
+                  </ExpansionPanel>
+                  
+                  <ExpansionPanel>
+                    <ExpansionPanelSummary
+                      aria-controls="panel2a-content"
+                      id="panel2a-header"
+                    >
+                      <Typography className={classes.heading}>Extract text from images or documents</Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                        Add text extraction component here...
+                    </ExpansionPanelDetails>
+                  </ExpansionPanel>
+                  
+                  <ExpansionPanel>
+                    <ExpansionPanelSummary
+                      aria-controls="panel2a-content"
+                      id="panel2a-header"
+                    >
+                      <Typography className={classes.heading}>Transcribe audio</Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                       Add audio transcribe component here...
+                    </ExpansionPanelDetails>
+                  </ExpansionPanel>
+                  
+                   <ExpansionPanel>
+                    <ExpansionPanelSummary
+                      aria-controls="panel2a-content"
+                      id="panel2a-header"
+                    >
+                      <Typography className={classes.heading}>Text interpretation</Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                         Add text interpretation component here...
+                    </ExpansionPanelDetails>
+                  </ExpansionPanel>
+                  
+                   <ExpansionPanel>
+                    <ExpansionPanelSummary
+                      aria-controls="panel2a-content"
+                      id="panel2a-header"
+                    >
+                      <Typography className={classes.heading}>Chatbot</Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                        Add chatbot component here
+                    </ExpansionPanelDetails>
+                  </ExpansionPanel>
+                  
+             </Grid>
+             
+               <Grid item xs={7}>
+                 <TextField
+                    id="outlined-multiline-flexible"
+                    label="output"
+                    multiline
+                    fullWidth
+                    rows="30"
+                    value={this.state.response}
+                    margin="normal"
+                    variant="outlined"
+                  />
+              </Grid>
+      </Grid>
+     
+    </div>
         );
     }
+
 }
 
-export default App;
+export default App; 
+
 ```
 
+2.6.3. Save the file (command + S for mac, ctrl + s for windows or File Save using the Cloud9 navigation).
+
+2.6.4. Check your app preview browser tab, you should be seeing the app with the placeholders (click to expand each section). 
 
 ## Initialize Amplify
 

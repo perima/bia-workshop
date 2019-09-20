@@ -17,20 +17,11 @@ import Grid from '@material-ui/core/Grid';
 
 import 'typeface-roboto';
 
-import Amplify from 'aws-amplify';
-import aws_exports from './aws-exports';
-import { withAuthenticator } from 'aws-amplify-react';
-
-import LabelsIdentification from './LabelsIdentification'; //rekognition
-import TextIdentification from './TextIdentification'; //textract
-import SpeechToText from './SpeechToText'; // transcribe
-import TextInterpretation from './TextInterpretation'; // comprehend
-import MyChatbox from './MyChatbox.js'; // lex
 
 
 class App extends Component {
 
-    state = { response: "please wait" }
+    state = { response: "" }
 
 
     callbackFunction = (childData) => {
@@ -67,7 +58,7 @@ class App extends Component {
                       <Typography className={classes.heading}>Generate labels for objects in an image</Typography>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
-                        <LabelsIdentification  parentCallback={this.callbackFunction} /> 
+                        Add Label Identification component here...
                     </ExpansionPanelDetails>
                   </ExpansionPanel>
                   
@@ -79,7 +70,7 @@ class App extends Component {
                       <Typography className={classes.heading}>Extract text from images or documents</Typography>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
-                       <TextIdentification parentCallback={this.callbackFunction} />
+                        Add text extraction component here...
                     </ExpansionPanelDetails>
                   </ExpansionPanel>
                   
@@ -91,7 +82,7 @@ class App extends Component {
                       <Typography className={classes.heading}>Transcribe audio</Typography>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
-                        <SpeechToText parentCallback={this.callbackFunction} />
+                       Add audio transcribe component here...
                     </ExpansionPanelDetails>
                   </ExpansionPanel>
                   
@@ -103,7 +94,7 @@ class App extends Component {
                       <Typography className={classes.heading}>Text interpretation</Typography>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
-                        <TextInterpretation parentCallback={this.callbackFunction} />
+                         Add text interpretation component here...
                     </ExpansionPanelDetails>
                   </ExpansionPanel>
                   
@@ -115,7 +106,7 @@ class App extends Component {
                       <Typography className={classes.heading}>Chatbot</Typography>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
-                         <MyChatbox />
+                        Add chatbot component here
                     </ExpansionPanelDetails>
                   </ExpansionPanel>
                   
@@ -141,4 +132,4 @@ class App extends Component {
 
 }
 
-export default withAuthenticator(App, { includeGreetings: true });
+export default App; 
