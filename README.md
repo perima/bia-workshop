@@ -18,6 +18,7 @@ We recommend following the steps in this workshop in the order they are presente
 
 1. Setup development environment
 2. Bootstrap your React application
+3. Amazon Rekognition
 
 
 # 1. Setup development environment
@@ -301,71 +302,98 @@ export default App;
 
 2.6.4. Check your app preview browser tab, you should be seeing the app with the placeholders (click to expand each section). 
 
-## Initialize Amplify
+![alt text](https://raw.githubusercontent.com/perima/bia-workshop/master/images/2.6.4.png "view revised app.js")
 
-1. In the project source directory run the  ```bash amplify init``` command.
+## 2.7. Initialize Amplify
+
+2.7.1. In your terminal (make sure you in the project source directory (bia-workshop/bia-workshop-app) run the  ``` amplify init``` command.
  
-2. Press Enter to accept the default project name (should be ‘bia-workshop-app’)
+2.7.2. Press Enter to accept the default project name (should be ‘bia-workshop-app’)
 
-3. Enter ‘dev’ for the environment name
+2.7.3. Enter ‘dev’ for the environment name
 
-4. Select ‘None’ for the default editor (we’re using Cloud9)
+2.7.4. Select ‘None’ for the default editor (we’re using Cloud9)
 
-5. Choose JavaScript and React when prompted
+2.7.5. Choose JavaScript and React when prompted
 
-6. Accept the default values for src/build paths 
+2.7.6. Accept the default values for src/build paths 
 
-7. Accept the default values for  build/start commands
+2.7.7. Accept the default values for  build/start commands
 
-8. Press Enter to accept the default value (Y) to use AWS profile
+2.7.8. Press Enter to accept the default value (Y) to use AWS profile
 
-9. Press Enter to select the default AWS profile 
+2.7.9. Press Enter to select the default AWS profile 
+
+Please note that you are now provisioning your cloud backend for the first time which may take a couple of minutes.
 
 ![tidy up](https://raw.githubusercontent.com/perima/bia-workshop/master/images/amplify-settings.png "Tidy up cloud9 workspace")
 
-# Add Authentication
-We will start by adding authentation to our app.
+# 2.8. Add Authentication
+We will start by adding authentation to our app to make sure that all AI services are available only to authenticated users.
 
-In the terminal use command ```amplify add auth```
+2.8.1. In the terminal execute the command ```amplify add auth```
 
 You will be asked a number of questions, please use the following values:
 
-*Do you want to use the default authentication and security configuration?* **Default Configuration**
+- *Do you want to use the default authentication and security configuration?* **Default Configuration**
 
-*How do you want users to be able to sign in?* **Username**
+- *How do you want users to be able to sign in?* **Username**
 
-*Do you want to configure advanced settings?* **No, I am done.**
+- *Do you want to configure advanced settings?* **No, I am done.**
 
-Run ```amplify push``` to publish your backend changes in the cloud.
+2.8.2. In the terminal Run ```amplify push``` to publish your backend changes in the cloud.
 
 When asked *Are you sure you want to continue?* Press Enter.
 
-Please note building the backend resources may take a couple of minutes.
 
-# Add Amplify npm dependencies
- ```npm install --save aws-amplify aws-amplify-react ```
+# 2.9. Install Amplify dependencies
+
+2.9.1. In the terminal run the following command to install the necessary npm packages to our app
+
+```bash
+npm install --save aws-amplify aws-amplify-react 
+``` 
  
-## Import amplify packages in our app.
-Time to replace the contents of src/app.js one more time to 
+## 2.10. Import amplify packages in our app.
+Time to update the contents of src/app.js to include authentication.
 
-Import and configure the AWS Amplify JS library
+2.10.1. Import and configure the AWS Amplify JS library
 
-Import the withAuthenticator higher order component from aws-amplify-react
+In your src/app.js file add the import statements for amplify and withAuthenticator auth comnponents near the top of the file after the line that reads ``` import 'typeface-roboto'; ```
 
-Wrapp the App component using withAuthenticator
+```javascript
+import Amplify from 'aws-amplify';
+import aws_exports from './aws-exports';
+import { withAuthenticator } from 'aws-amplify-react';
+Amplify.configure(aws_exports); // aws-exports.js file is managed by AWS Amplify
+```
 
+2.10.2. Wrap the App component using withAuthenticator to make sure that its accessed only by authenticated users by replacing the last line that reads ``` export default App;  ``` with 
+
+```javascript
+export default withAuthenticator(App, { includeGreetings: true });
+```
+
+2.10.3. Your ```src/app.js``` file should like the one below
 
 ```javascript
 /**
  * 
  * Building Intelligent Applications Workshop
  * 
+ * src/app.js
+ * 
  */
 
 import React, { Component } from 'react';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import { makeStyles } from '@material-ui/core/styles';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
+import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
+
 import 'typeface-roboto';
 
 import Amplify from 'aws-amplify';
@@ -373,59 +401,160 @@ import aws_exports from './aws-exports';
 import { withAuthenticator } from 'aws-amplify-react';
 Amplify.configure(aws_exports); // aws-exports.js file is managed by AWS Amplify
 
-class App extends Component { 
-    render() { 
+class App extends Component {
+
+    state = { response: "" }
+
+
+    callbackFunction = (childData) => {
+        console.log('parent state');
+        this.setState({ response: childData });
+    }
+
+
+    render() {
+
+        const classes = makeStyles(theme => ({
+            root: {
+                width: '100%',
+            },
+            heading: {
+                fontSize: theme.typography.pxToRem(15),
+                fontWeight: theme.typography.fontWeightRegular,
+            },
+        }));
+
         return (
-            <React.Fragment>
-            <CssBaseline />
-            <Container maxWidth="sm">
-              <Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '100vh' }} >
-                Unicorns are real!
-              </Typography>
-            </Container>
-          </React.Fragment>
+            <div className={classes.root}>
+    
+      <Grid container direction="row" alignItems="flex-start" spacing={2}>
+           
+             <Grid item xs={5}>
+                <Typography className={classes.heading}></Typography>
+                <Typography variant="h4" component="h4" align="center">Building Intelligent Applications Workshop</Typography>
+                    <ExpansionPanel>
+                    <ExpansionPanelSummary
+                      aria-controls="panel1a-content"
+                      id="panel1a-header"
+                    >
+                      <Typography className={classes.heading}>Generate labels for objects in an image</Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                        Add Label Identification component here...
+                    </ExpansionPanelDetails>
+                  </ExpansionPanel>
+                  
+                  <ExpansionPanel>
+                    <ExpansionPanelSummary
+                      aria-controls="panel2a-content"
+                      id="panel2a-header"
+                    >
+                      <Typography className={classes.heading}>Extract text from images or documents</Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                        Add text extraction component here...
+                    </ExpansionPanelDetails>
+                  </ExpansionPanel>
+                  
+                  <ExpansionPanel>
+                    <ExpansionPanelSummary
+                      aria-controls="panel2a-content"
+                      id="panel2a-header"
+                    >
+                      <Typography className={classes.heading}>Transcribe audio</Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                       Add audio transcribe component here...
+                    </ExpansionPanelDetails>
+                  </ExpansionPanel>
+                  
+                   <ExpansionPanel>
+                    <ExpansionPanelSummary
+                      aria-controls="panel2a-content"
+                      id="panel2a-header"
+                    >
+                      <Typography className={classes.heading}>Text interpretation</Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                         Add text interpretation component here...
+                    </ExpansionPanelDetails>
+                  </ExpansionPanel>
+                  
+                   <ExpansionPanel>
+                    <ExpansionPanelSummary
+                      aria-controls="panel2a-content"
+                      id="panel2a-header"
+                    >
+                      <Typography className={classes.heading}>Chatbot</Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                        Add chatbot component here
+                    </ExpansionPanelDetails>
+                  </ExpansionPanel>
+                  
+             </Grid>
+             
+               <Grid item xs={7}>
+                 <TextField
+                    id="outlined-multiline-flexible"
+                    label="output"
+                    multiline
+                    fullWidth
+                    rows="30"
+                    value={this.state.response}
+                    margin="normal"
+                    variant="outlined"
+                  />
+              </Grid>
+      </Grid>
+     
+    </div>
         );
     }
+
 }
 
-export default withAuthenticator(App, {includeGreetings: true});
+export default withAuthenticator(App, { includeGreetings: true });
+
 ```
 
-## Create an account in the app
-Once you saved the new contents of app.js, your preview tab should refresh and display a login. 
-Its time to register (with a valid email address) to use the app. Enter the validation code
-received in your inbox to complete the registration and login.
+## 2.11. Create an account in the app
 
-We now have working authentation for our app :-) 
+2.11.1 Refresh yourpreview browser tab, you shoul be seeing a login screen asking for username and password.
 
-# Amazon Rekognition
+2.11.2 Click on the register link at the bottom to create a new account. ** make sure you use a valid email address ** for the registration as you will receive a code to complete the registration. 
 
-## Configure backend for Rekognition
+2.11.3 When you receive the email with the code, enter it to complete the registration. 
+
+2.11.4 We now have working authentation for our app and you should be seeing the placeholders again but this time you are an authenticated user (you should be seeing a sign out button at the top right). 
+
+![tidy up](https://raw.githubusercontent.com/perima/bia-workshop/master/images/2.11.4.png "authenticated login")
+
+# 3. Amazon Rekognition
+
 The first AI service we will add to our application is Amazon Rekognition.
 
-In your terminal run the command ```amplify add predictions``` to automatically create the backend configuration.
+## 3.1 Create the backend 
+3.1.1. In your terminal run the command ```amplify add predictions``` to automatically create the backend configuration.
 
-Please give the following answers to the questions when prompted:
+3.1.2. Please give the following answers to the questions when prompted:
 
-*Please select from one of the categories below* **Identify**
+- *Please select from one of the categories below* **Identify**
 
-*What would you like to identify?* **Identify Labels**
+- *What would you like to identify?* **Identify Labels**
 
-*Provide a friendly name for your resource* **[Press Enter to accept the default value]**
+- *Provide a friendly name for your resource* **[Press Enter to accept the default value]**
 
-*Would you like use the default configuration?* **Default Configuration**
+- *Would you like use the default configuration?* **Default Configuration**
 
-*Who should have access?* **Auth users only**
+- *Who should have access?* **Auth users only**
 
-We are now ready to publish our backend by running the command ```amplify push``` and press Enter when asked if you would like to proceed.
+3.1.3. We are now ready to publish our backend by running the command ```amplify push``` and press Enter when asked if you would like to proceed.
 
-## Modify the app.js file to include predictions
 
-We now need to create the predictions components. 
+## 3.2 create the LabelsIdentification component
 
-## create the LabelsIdentification component
-
-Create a file called src/LabelsIdentification.js and add the following content
+Create a file called ```src/LabelsIdentification.js``` and add the following content
 
 
 ```javascript 
@@ -480,21 +609,23 @@ export default (LabelsIdentification);
 
 ```
 
-## update app.js to use the new LabelsIdentification component.
+## 3.3 update app.js to use the new LabelsIdentification component.
+
+3.3.1. Add the following import statement to your new component at the top just before the ```Amplify.configure(aws_exports);``` line. 
+
 ```javascript 
 import LabelsIdentification from './LabelsIdentification' //rekognition
 ```
 
-and
+3.3.2. Replace the placeholder ```  Add Label Identification component here...```  with the following 
 
 ```javascript
  <LabelsIdentification  parentCallback={this.callbackFunction} />
 ```
 
-Your src/app.js file should look like the below
+3.3.4. Your src/app.js file should look like the below
 
 ```javascript
-
 /**
  * 
  * Building Intelligent Applications Workshop
@@ -504,59 +635,143 @@ Your src/app.js file should look like the below
  */
 
 import React, { Component } from 'react';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import { makeStyles } from '@material-ui/core/styles';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
+
 import 'typeface-roboto';
 
 import Amplify from 'aws-amplify';
 import aws_exports from './aws-exports';
-import { withAuthenticator } from 'aws-amplify-react';
+import awsconfig from './aws-exports';
 
-import LabelsIdentification from './LabelsIdentification' //rekognition
+import { withAuthenticator } from 'aws-amplify-react';
 
 Amplify.configure(aws_exports); // aws-exports.js file is managed by AWS Amplify
 
-
 class App extends Component {
-  
-  state = { response: "please wait" }
-  
-  
+
+    state = { response: "" }
+
+
     callbackFunction = (childData) => {
-      console.log('parent state');
-          this.setState({response: childData});
+        console.log('parent state');
+        this.setState({ response: childData });
     }
-  
-  render() {
-    return (
-      <React.Fragment>
-            <CssBaseline />
-            <Container>
-              <Typography component="div" >
-                Unicorns are real!
-                  <LabelsIdentification  parentCallback={this.callbackFunction} />
-              </Typography>
-               <TextField
-                id="outlined-multiline-flexible"
-                label="output"
-                multiline
-                fullWidth
-                rows="30"
-                value={this.state.response}
-                margin="normal"
-                variant="outlined"
-              />
-            </Container>
-          </React.Fragment>
-    );
-  }
+
+
+    render() {
+
+        const classes = makeStyles(theme => ({
+            root: {
+                width: '100%',
+            },
+            heading: {
+                fontSize: theme.typography.pxToRem(15),
+                fontWeight: theme.typography.fontWeightRegular,
+            },
+        }));
+
+        return (
+            <div className={classes.root}>
+    
+      <Grid container direction="row" alignItems="flex-start" spacing={2}>
+           
+             <Grid item xs={5}>
+                <Typography className={classes.heading}></Typography>
+                <Typography variant="h4" component="h4" align="center">Building Intelligent Applications Workshop</Typography>
+                    <ExpansionPanel>
+                    <ExpansionPanelSummary
+                      aria-controls="panel1a-content"
+                      id="panel1a-header"
+                    >
+                      <Typography className={classes.heading}>Generate labels for objects in an image</Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                        <LabelsIdentification  parentCallback={this.callbackFunction} />
+                    </ExpansionPanelDetails>
+                  </ExpansionPanel>
+                  
+                  <ExpansionPanel>
+                    <ExpansionPanelSummary
+                      aria-controls="panel2a-content"
+                      id="panel2a-header"
+                    >
+                      <Typography className={classes.heading}>Extract text from images or documents</Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                        Add text extraction component here...
+                    </ExpansionPanelDetails>
+                  </ExpansionPanel>
+                  
+                  <ExpansionPanel>
+                    <ExpansionPanelSummary
+                      aria-controls="panel2a-content"
+                      id="panel2a-header"
+                    >
+                      <Typography className={classes.heading}>Transcribe audio</Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                       Add audio transcribe component here...
+                    </ExpansionPanelDetails>
+                  </ExpansionPanel>
+                  
+                   <ExpansionPanel>
+                    <ExpansionPanelSummary
+                      aria-controls="panel2a-content"
+                      id="panel2a-header"
+                    >
+                      <Typography className={classes.heading}>Text interpretation</Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                         Add text interpretation component here...
+                    </ExpansionPanelDetails>
+                  </ExpansionPanel>
+                  
+                   <ExpansionPanel>
+                    <ExpansionPanelSummary
+                      aria-controls="panel2a-content"
+                      id="panel2a-header"
+                    >
+                      <Typography className={classes.heading}>Chatbot</Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                        Add chatbot component here
+                    </ExpansionPanelDetails>
+                  </ExpansionPanel>
+                  
+             </Grid>
+             
+               <Grid item xs={7}>
+                 <TextField
+                    id="outlined-multiline-flexible"
+                    label="output"
+                    multiline
+                    fullWidth
+                    rows="30"
+                    value={this.state.response}
+                    margin="normal"
+                    variant="outlined"
+                  />
+              </Grid>
+      </Grid>
+     
+    </div>
+        );
+    }
+
 }
 
 export default withAuthenticator(App, { includeGreetings: true });
-
 ```
+
+3.3.5. You should be able to test now the label detection functionality of your app by refreshing your preview browser tab.
+
+
 
 # Amazon Textract
 
