@@ -397,7 +397,9 @@ Answer the questions in the following way
 
 Run the command ```amplify push``` to update our cloud backend and select Yes when asked if you want to continue.
 
-## Create the text identification component 
+## Create the text identification react component 
+
+Create a new empty file  **src/TextIdentification.js** and paste the source code below.
 
 ```javascript
 
@@ -451,19 +453,19 @@ export default (TextIdentification);
 
 ## Import the new react component into app.js
 
-add to your imports at the top of the filq
+Add the new component in your imports at the top of the src/app.js file
 
 ```javascript 
 import TextIdentification from './TextIdentification'; //textract 
 ```
 
-add the component in the render function 
+You also need to add the component in the render function 
 
 ```javascript 
 <TextIdentification parentCallback={this.callbackFunction} /> 
 ```
 
-your app.js shoud look like the one below
+Your src/app.js shoud look like the one below
 
 ```javascript
 
@@ -718,6 +720,8 @@ It's now time to publish our backend changes to the cloud. Run ```amplify push``
 
 ## Create react component for comprehend 
 
+Create a src/TextInterpretation.js file and copy and paste the contents below.
+
 ```javascript
 
 /**
@@ -772,6 +776,94 @@ export default (TextInterpretation);
 
 ```
 
+## Add the component to src/app.js
+Add the following line at the top of src/app.js 
+
+```javascript 
+import TextInterpretation from './TextInterpretation'; // comprehend
+```
+
+Now add the component in the render method
+
+```javascript
+ <TextInterpretation parentCallback={this.callbackFunction} />
+ 
+```
+
+Your src.app.js should look like the one below
+
+```javascript
+/**
+ * 
+ * Building Intelligent Applications Workshop
+ * 
+ * src/app.js
+ * 
+ */
+
+import React, { Component } from 'react';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container';
+import TextField from '@material-ui/core/TextField';
+import 'typeface-roboto';
+
+import Amplify from 'aws-amplify';
+import aws_exports from './aws-exports';
+import { withAuthenticator } from 'aws-amplify-react';
+
+import LabelsIdentification from './LabelsIdentification'; //rekognition
+import TextIdentification from './TextIdentification'; //textract
+import SpeechToText from './SpeechToText'; // transcribe
+import TextInterpretation from './TextInterpretation'; // comprehend
+
+Amplify.configure(aws_exports); // aws-exports.js file is managed by AWS Amplify
+
+
+class App extends Component {
+  
+  state = { response: "please wait" }
+  
+  
+    callbackFunction = (childData) => {
+      console.log('parent state');
+          this.setState({response: childData});
+    }
+  
+  render() {
+    return (
+      <React.Fragment>
+            <CssBaseline />
+            <Container>
+              <Typography component="div" >
+                Unicorns are real!
+                  <LabelsIdentification  parentCallback={this.callbackFunction} />
+                  <TextIdentification parentCallback={this.callbackFunction} />
+                  <SpeechToText parentCallback={this.callbackFunction} />
+                  <TextInterpretation parentCallback={this.callbackFunction} />
+              </Typography>
+               <TextField
+                id="outlined-multiline-flexible"
+                label="output"
+                multiline
+                fullWidth
+                rows="30"
+                value={this.state.response}
+                margin="normal"
+                variant="outlined"
+              />
+            </Container>
+          </React.Fragment>
+    );
+  }
+}
+
+export default withAuthenticator(App, { includeGreetings: true });
+
+```
+
+
+
 # Amazon Lex
 
 It's time to add a chatbot to our app. 
@@ -800,6 +892,9 @@ flower chatbot.
 ![alt text](https://raw.githubusercontent.com/perima/bia-workshop/master/images/chatbot-console.png "Tidy up cloud9 workspace")
 
 ## create the react component for our chatbot 
+
+Create a new file src/MyChatbox.js and copy and paste the contents below.
+
 ```javascript
 /**
  * 
@@ -854,15 +949,15 @@ class MyChatbox extends Component {
 export default MyChatbox;
 ```
 
-## Add the chatbot component to your app.js 
+## Add the chatbot component to your src/app.js 
 
-you need to import the newly created component 
+You need to import the newly created component by adding the line below to src/app.js at the top. 
 
 ```javascript
 import MyChatbox from './MyChatbox.js'; // lex
 ```
 
-and add the component in your render method 
+Now add the component in your render method of src/app.js file.
 
 ```javascript 
  <TextField
