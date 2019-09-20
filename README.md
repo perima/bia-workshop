@@ -26,37 +26,45 @@ We recommend following the steps in this workshop in the order they are presente
 
 1.1.2. At the top right corner of the console, make sure you’re using one of these regions: Virginia (us-east-1), Oregon (us-west-2), Ireland (eu-west-1) or Singapore (ap-southeast-1).
 
-1.1.3. Select Create environment
+1.1.3. Press **Create environment**
 
 ![alt text](https://raw.githubusercontent.com/perima/bia-workshop/master/images/1.1.3..png "select correct region!")
 
-1.1.4. Name the environment BIA-workshop, and go to the Next step
+1.1.4. Name the environment **BIA-workshop**, and press **Next step**
 
 ![alt text](https://raw.githubusercontent.com/perima/bia-workshop/master/images/1.1.4.png "enter the environment name!") 
 
-1.1.5. Select Create a new instance for environment (EC2) and pick t2.medium
+1.1.5. Select pick **t2.medium** for instance type, then press **Next step**
 
 ![alt text](https://raw.githubusercontent.com/perima/bia-workshop/master/images/1.1.5.png "select tthe instance type") 
 
-1.1.6. Leave all of the environment settings as they are, and go to the Next step
-
-![alt text](https://raw.githubusercontent.com/perima/bia-workshop/master/images/1.1.6.png "select tthe instance type") 
-
-1.1.7. In the *Review screen* Press *Create environment*.
+1.1.6. In the **Review screen** Press **Create environment**.
 
 ![alt text](https://raw.githubusercontent.com/perima/bia-workshop/master/images/1.1.7.png "select tthe instance type") 
 
 ## 1.2 Optimize your Cloud9 workspace
-1. Switch to dark theme 
-2. Close the lower terminal window 
-3. Close welcome screen
-4. Open new terminal 
-
 
 ![alt text](https://raw.githubusercontent.com/perima/bia-workshop/master/images/cloud9-tidy-1024.png "Tidy up cloud9 workspace")
 
-## 1.3 Install & update your workspace.
-Run the following commands 
+1.2.1. Switch **Main Theme** to **AWS Cloud9 Classic Dark Theme**
+
+1.2.2. Switch **Editor Theme** to **Cloud9 Night Low-Color**
+
+![alt text](https://raw.githubusercontent.com/perima/bia-workshop/master/images/1.2.1.png "Tidy up cloud9 workspace")
+
+1.2.3 Close the lower terminal window 
+
+1.2.4 Close welcome screen
+
+1.2.5 Open new terminal 
+![alt text](https://raw.githubusercontent.com/perima/bia-workshop/master/images/1.2.5.png "Tidy up cloud9 workspace")
+
+1.2.6 if your environment is looking like the screenshot below you are ready to proceed. 
+
+
+
+## 1.3 Install packages & update your environment.
+Run the following commands in your cloud9 terminal.
 
 ```bash
 # Update the AWS CLI
