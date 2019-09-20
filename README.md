@@ -17,6 +17,7 @@ We recommend following the steps in this workshop in the order they are presente
 ## Contents
 
 1. Setup development environment
+2. Bootstrap your React application
 
 
 # 1. Setup development environment
@@ -57,11 +58,12 @@ We recommend following the steps in this workshop in the order they are presente
 1.2.4 Close welcome screen
 
 1.2.5 Open new terminal 
+
 ![alt text](https://raw.githubusercontent.com/perima/bia-workshop/master/images/1.2.5.png "Tidy up cloud9 workspace")
 
 1.2.6 if your environment is looking like the screenshot below you are ready to proceed. 
 
-
+![alt text](https://raw.githubusercontent.com/perima/bia-workshop/master/images/1.2.6.png "Tidy up cloud9 workspace")
 
 ## 1.3 Install packages & update your environment.
 Run the following commands in your cloud9 terminal.
@@ -83,7 +85,7 @@ sudo yum install jq -y
 
 ## 1.4. Configure default region
 
-Configure default AWS region for Amplify CLI, please note we are using us-west-2 for this workshop.
+Configure default AWS region for Amplify CLI, please note we are using us-west-2 for this workshop. In your terminal run the following command 
 
 ```bash
 cat <<END > ~/.aws/config
@@ -92,20 +94,23 @@ region=us-west-2
 END
 ```
 
-# Bootstrap our React application
+# 2. Bootstrap a new React application
 
-Setup our react application
+## 2.1. Create a new react application
+
+2.1.1. Run the following command sto bootstram your app 
 
 ```bash
 npx create-react-app bia-workshop-app
-
+```
+2.1.2. Switch to the newly created app directory 
 
 ```bash
 cd bia-workshop-app/
 ```
 
-## Install Material UI
-For our components we will use Material UI. Run the following command and ignore any warnings.
+## 2.2. Install Material UI
+For our components we will use [Material UI](https://material-ui.com/) (a popular React UI framework). In your terminal, run the following commands and ignore any warnings.
 
 ```bash
 ## install material-ui
@@ -115,19 +120,34 @@ npm install --save @material-ui/core
 npm install typeface-roboto --save
 ```
 
-## Start your app
+## 2.3. Start your app
+Run the following command to start your local (cloud9) application so we can preview without deploying the single page app. A few seconds later it will be ready (it should not exit, we want to keep this running in the background).
+
 ```bash
 npm start
 ```
 
-## Open additional terminal 
-We want to keep the app preview running so we will open a new terminal to work with.
+## 2.4. Start app preview
+2.4.1. Press Preview in the top horizontal bar  
+![alt text](https://raw.githubusercontent.com/perima/bia-workshop/master/images/2.4.1.png "open additional terminal")
 
-## Open preview window in new browser tab
+2.4.2.Open preview window in a new tab  and close the window within the IDE.
 
+![alt text](https://raw.githubusercontent.com/perima/bia-workshop/master/images/2.4.2.png "open preview")
 
-## Clean up src/app.js 
+2.4.3. Hopefully you got a new tab in your browser open which has loaded your single page application
+
+![alt text](https://raw.githubusercontent.com/perima/bia-workshop/master/images/2.4.3.png "open preview")
+
+## 2.5. Open additional terminal 
+
+We want to keep the app preview running so that we can test our app. We will open one more terminal to use with Amplify CLI going forward.
+
+![alt text](https://raw.githubusercontent.com/perima/bia-workshop/master/images/2.5.png "open additional terminal")
+
+## 2.6 Clean up src/app.js 
 Replace the contents of src/app.js file with the following
+
 ```javascript
 /**
  * 
