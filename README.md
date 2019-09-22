@@ -20,6 +20,9 @@ We recommend following the steps in this workshop in the order they are presente
 2. Bootstrap your React application
 3. Amazon Rekognition
 4. Amazon Textract
+5. Amazon Transcribe
+6. Amazon Comprehend
+7. Amazon lex
 
 # 1. Setup development environment
 
@@ -1353,13 +1356,18 @@ export default withAuthenticator(App, { includeGreetings: true });
 ## 5.5. Try it. 
 Once you saved the changes, go back to your browser application preview tab and try transcribe. Please note that your browser may ask you to authorise access to the microphone as per below.
 
-![alt text](https://raw.githubusercontent.com/perima/bia-workshop/master/images/5.4.3..png "select correct region!")
+![alt text](https://raw.githubusercontent.com/perima/bia-workshop/master/images/5.4.3.png "select correct region!")
 
-# Amazon Comprehend 
+# 6. Amazon Comprehend 
 
-Run ```amplify add predictions```
+## 6.1 Update your cloud backend 
 
-Answer the questions as follows when prompted 
+6.1.1. Run the following command in your Cloud9 terminal  
+```bash 
+amplify add predictions
+```
+
+6.1.2. Answer the questions as follows when prompted 
 
 *Please select from one of the categories below* **Interpret**
 
@@ -1371,14 +1379,15 @@ Answer the questions as follows when prompted
 
 *Who should have access?* **Auth users only**
 
-It's now time to publish our backend changes to the cloud. Run ```amplify push``` and select **Y** when prompted.
+6.1.3. It's now time to publish our backend changes to the cloud. Run the command ```amplify push``` and select **Y** when asked if you want to continue.
 
-## Create react component for comprehend 
+## 6.2 Create react component for comprehend 
 
-Create a src/TextInterpretation.js file and copy and paste the contents below.
+6.2.1. Right click on the **src** folder at the Cloud9 tree navigation on the left of your IDE and select **New File**. Name the new file **TextInterpretation.js** (src/TextInterpretation.js)
+
+6.2.2. Copy and paste the contents below.
 
 ```javascript
-
 /**
  * 
  * Building Intelligent Applications Workshop
@@ -1431,14 +1440,15 @@ export default (TextInterpretation);
 
 ```
 
-## Add the component to src/app.js
-Add the following line at the top of src/app.js 
+## 6.3 Update src/app.js
+
+6.3.1 Add the import statement for the new component just before the ```Amplify.configure(aws_exports);``` line.  
 
 ```javascript 
 import TextInterpretation from './TextInterpretation'; // comprehend
 ```
 
-Now add the component in the render method
+6.3.2 Now replace the placeholder text **** with the actual component.
 
 ```javascript
  <TextInterpretation parentCallback={this.callbackFunction} />
@@ -1457,75 +1467,155 @@ Your src.app.js should look like the one below
  */
 
 import React, { Component } from 'react';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import { makeStyles } from '@material-ui/core/styles';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
+
 import 'typeface-roboto';
 
 import Amplify from 'aws-amplify';
 import aws_exports from './aws-exports';
 import { withAuthenticator } from 'aws-amplify-react';
-
-import LabelsIdentification from './LabelsIdentification'; //rekognition
-import TextIdentification from './TextIdentification'; //textract
+import LabelsIdentification from './LabelsIdentification' //rekognition
+import TextIdentification from './TextIdentification'; //textract 
 import SpeechToText from './SpeechToText'; // transcribe
 import TextInterpretation from './TextInterpretation'; // comprehend
-
 Amplify.configure(aws_exports); // aws-exports.js file is managed by AWS Amplify
 
 
 class App extends Component {
-  
-  state = { response: "please wait" }
-  
-  
+
+    state = { response: "" }
+
+
     callbackFunction = (childData) => {
-      console.log('parent state');
-          this.setState({response: childData});
+        console.log('parent state');
+        this.setState({ response: childData });
     }
-  
-  render() {
-    return (
-      <React.Fragment>
-            <CssBaseline />
-            <Container>
-              <Typography component="div" >
-                Unicorns are real!
-                  <LabelsIdentification  parentCallback={this.callbackFunction} />
-                  <TextIdentification parentCallback={this.callbackFunction} />
-                  <SpeechToText parentCallback={this.callbackFunction} />
-                  <TextInterpretation parentCallback={this.callbackFunction} />
-              </Typography>
-               <TextField
-                id="outlined-multiline-flexible"
-                label="output"
-                multiline
-                fullWidth
-                rows="30"
-                value={this.state.response}
-                margin="normal"
-                variant="outlined"
-              />
-            </Container>
-          </React.Fragment>
-    );
-  }
+
+
+    render() {
+
+        const classes = makeStyles(theme => ({
+            root: {
+                width: '100%',
+            },
+            heading: {
+                fontSize: theme.typography.pxToRem(15),
+                fontWeight: theme.typography.fontWeightRegular,
+            },
+        }));
+
+        return (
+            <div className={classes.root}>
+    
+      <Grid container direction="row" alignItems="flex-start" spacing={2}>
+           
+             <Grid item xs={5}>
+                <Typography className={classes.heading}></Typography>
+                <Typography variant="h4" component="h4" align="center">Building Intelligent Applications Workshop</Typography>
+                    <ExpansionPanel>
+                    <ExpansionPanelSummary
+                      aria-controls="panel1a-content"
+                      id="panel1a-header"
+                    >
+                      <Typography className={classes.heading}>Generate labels for objects in an image</Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                        <LabelsIdentification  parentCallback={this.callbackFunction} />
+                    </ExpansionPanelDetails>
+                  </ExpansionPanel>
+                  
+                  <ExpansionPanel>
+                    <ExpansionPanelSummary
+                      aria-controls="panel2a-content"
+                      id="panel2a-header"
+                    >
+                      <Typography className={classes.heading}>Extract text from images or documents</Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                        <TextIdentification parentCallback={this.callbackFunction} /> 
+                    </ExpansionPanelDetails>
+                  </ExpansionPanel>
+                  
+                  <ExpansionPanel>
+                    <ExpansionPanelSummary
+                      aria-controls="panel2a-content"
+                      id="panel2a-header"
+                    >
+                      <Typography className={classes.heading}>Transcribe audio</Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                        <SpeechToText parentCallback={this.callbackFunction} />
+                    </ExpansionPanelDetails>
+                  </ExpansionPanel>
+                  
+                   <ExpansionPanel>
+                    <ExpansionPanelSummary
+                      aria-controls="panel2a-content"
+                      id="panel2a-header"
+                    >
+                      <Typography className={classes.heading}>Text interpretation</Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                        <TextInterpretation parentCallback={this.callbackFunction} />
+                    </ExpansionPanelDetails>
+                  </ExpansionPanel>
+                  
+                   <ExpansionPanel>
+                    <ExpansionPanelSummary
+                      aria-controls="panel2a-content"
+                      id="panel2a-header"
+                    >
+                      <Typography className={classes.heading}>Chatbot</Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                        Add chatbot component here
+                    </ExpansionPanelDetails>
+                  </ExpansionPanel>
+                  
+             </Grid>
+             
+               <Grid item xs={7}>
+                 <TextField
+                    id="outlined-multiline-flexible"
+                    label="output"
+                    multiline
+                    fullWidth
+                    rows="30"
+                    value={this.state.response}
+                    margin="normal"
+                    variant="outlined"
+                  />
+              </Grid>
+      </Grid>
+     
+    </div>
+        );
+    }
+
 }
 
 export default withAuthenticator(App, { includeGreetings: true });
-
 ```
 
 
-
-# Amazon Lex
+# 7. Amazon Lex
 
 It's time to add a chatbot to our app. 
 
-Start by running the command ```amplify add interactions``` in the terminal.
+## 7.1 Update your cloud backend. 
+7.1.1 In your Cloud9 terminal run 
 
-Answer the questions as per below when prompted 
+```bash
+amplify add interactions
+```
+
+7.1.2. Answer the questions as follows when prompted 
 
 *Provide a friendly resource name that will be used to label this category in the project:* **[Press Enter to accept the suggested name]**
 
@@ -1536,19 +1626,24 @@ Answer the questions as per below when prompted
 *Please indicate if your use of this bot is subject to the Children's Online Privacy Protection Act (COPPA).*
 *Learn more: https://www.ftc.gov/tips-advice/business-center/guidance/complying-coppa-frequently-asked-questions* **No**
 
-Run the command ```amplify push``` to publish your changes to the cloud backend. Answer **Y** when asked if you are sure you want to do so.
+7.1.3. Run the command ```amplify push``` to publish your changes to your cloud backend. Answer **Y** when asked if you are sure you want to continue.
 
 
-## Add the react component for our chatbot 
+7.1.4. Get the name of your newly created bot. 
 
-You will need to go to the Lex console https://us-west-2.console.aws.amazon.com/lex/home to get the name of your newly created
-flower chatbot. 
+Go to the Lex console https://us-west-2.console.aws.amazon.com/lex/home to get the name of your newly created flower bot. 
+
+![alt text](https://raw.githubusercontent.com/perima/bia-workshop/master/images/7.1.4png "select correct region!")
+
+7.1.5. Take a moment to look at the bot settings in the console.
 
 ![alt text](https://raw.githubusercontent.com/perima/bia-workshop/master/images/chatbot-console.png "Tidy up cloud9 workspace")
 
-## create the react component for our chatbot 
+## 7.2 Create the chatbot component
 
-Create a new file src/MyChatbox.js and copy and paste the contents below.
+7.2.1. Right click on the **src** folder on the tree navigation of your Cloud9 IDE and select **New File**. Name the new file **MyChatbox.js** (src/MyChatbox.js).
+
+7.2.2. Copy and paste the contents below in the new file. **Don't forget** to replace **replace_this_with_your_own_bot_name_from_console** with the name of the bot you got of step 7.1.4
 
 ```javascript
 /**
@@ -1583,7 +1678,7 @@ class MyChatbox extends Component {
     }
 
     alert('Success: ' + JSON.stringify(confirmation, null, 2));
-    return 'Trip booked. Thank you! what would you like to do next?';
+    return 'Done! Thank you! what would you like to do next?';
   }
 
   render() {
@@ -1604,27 +1699,18 @@ class MyChatbox extends Component {
 export default MyChatbox;
 ```
 
-## Add the chatbot component to your src/app.js 
+## 7.3 Add the new component to your src/app.js 
 
-You need to import the newly created component by adding the line below to src/app.js at the top. 
+7.3.1. Add the import statement of the new component near the top of your src/app.js file just before the  ```Amplify.configure(aws_exports);``` line. 
 
 ```javascript
 import MyChatbox from './MyChatbox.js'; // lex
 ```
 
-Now add the component in your render method of src/app.js file.
+7.3.2. Replace the placeholder text **Add chatbot component here** in the render method with the newcomponent below.
 
 ```javascript 
- <TextField
-                id="outlined-multiline-flexible"
-                label="output"
-                multiline
-                fullWidth
-                rows="30"
-                value={this.state.response}
-                margin="normal"
-                variant="outlined"
-              />
+  <MyChatbox />
 ```
 
 Your src/app.js file should like the one below
@@ -1639,65 +1725,174 @@ Your src/app.js file should like the one below
  */
 
 import React, { Component } from 'react';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import { makeStyles } from '@material-ui/core/styles';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
+
 import 'typeface-roboto';
 
 import Amplify from 'aws-amplify';
 import aws_exports from './aws-exports';
 import { withAuthenticator } from 'aws-amplify-react';
-
-import LabelsIdentification from './LabelsIdentification'; //rekognition
-import TextIdentification from './TextIdentification'; //textract
+import LabelsIdentification from './LabelsIdentification' //rekognition
+import TextIdentification from './TextIdentification'; //textract 
 import SpeechToText from './SpeechToText'; // transcribe
 import TextInterpretation from './TextInterpretation'; // comprehend
 import MyChatbox from './MyChatbox.js'; // lex
-
 Amplify.configure(aws_exports); // aws-exports.js file is managed by AWS Amplify
 
 
 class App extends Component {
-  
-  state = { response: "please wait" }
-  
-  
+
+    state = { response: "" }
+
+
     callbackFunction = (childData) => {
-      console.log('parent state');
-          this.setState({response: childData});
+        console.log('parent state');
+        this.setState({ response: childData });
     }
-  
-  render() {
-    return (
-      <React.Fragment>
-            <CssBaseline />
-            <Container>
-              <Typography component="div" >
-                Unicorns are real!
-                  <LabelsIdentification  parentCallback={this.callbackFunction} />
-                  <TextIdentification parentCallback={this.callbackFunction} />
-                  <SpeechToText parentCallback={this.callbackFunction} />
-                  <TextInterpretation parentCallback={this.callbackFunction} />
-                  <MyChatbox />
-              </Typography>
-               <TextField
-                id="outlined-multiline-flexible"
-                label="output"
-                multiline
-                fullWidth
-                rows="30"
-                value={this.state.response}
-                margin="normal"
-                variant="outlined"
-              />
-            </Container>
-          </React.Fragment>
-    );
-  }
+
+
+    render() {
+
+        const classes = makeStyles(theme => ({
+            root: {
+                width: '100%',
+            },
+            heading: {
+                fontSize: theme.typography.pxToRem(15),
+                fontWeight: theme.typography.fontWeightRegular,
+            },
+        }));
+
+        return (
+            <div className={classes.root}>
+    
+      <Grid container direction="row" alignItems="flex-start" spacing={2}>
+           
+             <Grid item xs={5}>
+                <Typography className={classes.heading}></Typography>
+                <Typography variant="h4" component="h4" align="center">Building Intelligent Applications Workshop</Typography>
+                    <ExpansionPanel>
+                    <ExpansionPanelSummary
+                      aria-controls="panel1a-content"
+                      id="panel1a-header"
+                    >
+                      <Typography className={classes.heading}>Generate labels for objects in an image</Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                        <LabelsIdentification  parentCallback={this.callbackFunction} />
+                    </ExpansionPanelDetails>
+                  </ExpansionPanel>
+                  
+                  <ExpansionPanel>
+                    <ExpansionPanelSummary
+                      aria-controls="panel2a-content"
+                      id="panel2a-header"
+                    >
+                      <Typography className={classes.heading}>Extract text from images or documents</Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                        <TextIdentification parentCallback={this.callbackFunction} /> 
+                    </ExpansionPanelDetails>
+                  </ExpansionPanel>
+                  
+                  <ExpansionPanel>
+                    <ExpansionPanelSummary
+                      aria-controls="panel2a-content"
+                      id="panel2a-header"
+                    >
+                      <Typography className={classes.heading}>Transcribe audio</Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                        <SpeechToText parentCallback={this.callbackFunction} />
+                    </ExpansionPanelDetails>
+                  </ExpansionPanel>
+                  
+                   <ExpansionPanel>
+                    <ExpansionPanelSummary
+                      aria-controls="panel2a-content"
+                      id="panel2a-header"
+                    >
+                      <Typography className={classes.heading}>Text interpretation</Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                        <TextInterpretation parentCallback={this.callbackFunction} />
+                    </ExpansionPanelDetails>
+                  </ExpansionPanel>
+                  
+                   <ExpansionPanel>
+                    <ExpansionPanelSummary
+                      aria-controls="panel2a-content"
+                      id="panel2a-header"
+                    >
+                      <Typography className={classes.heading}>Chatbot</Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                         <MyChatbox />
+                    </ExpansionPanelDetails>
+                  </ExpansionPanel>
+                  
+             </Grid>
+             
+               <Grid item xs={7}>
+                 <TextField
+                    id="outlined-multiline-flexible"
+                    label="output"
+                    multiline
+                    fullWidth
+                    rows="30"
+                    value={this.state.response}
+                    margin="normal"
+                    variant="outlined"
+                  />
+              </Grid>
+      </Grid>
+     
+    </div>
+        );
+    }
+
 }
 
 export default withAuthenticator(App, { includeGreetings: true });
 ```
+
+## 7.4 Try it!
+Once you saved, refresh your browser tab with the application review. Try asking your bot **I would like to order some flowers** or any of the utterances configured in your console.
+
+![alt text](https://raw.githubusercontent.com/perima/bia-workshop/master/images/7.4.png "enter the environment name!") 
+
+
+# 8. Clean up
+
+## Cloud backenbd
+8.1. To delete all resources in the cloud associated with your application run the following command in your terminal. Select **Y** when asked if you are sure. 
+
+```bash
+amplify delete
+```
+
+8.2. Go to the Cloud9 dashboard by click on the blue Cloud9 logo on the top right.
+
+![go to cloud9 dashboard](https://raw.githubusercontent.com/perima/bia-workshop/master/images/8.2.png "go to Cloud9 dashboard") 
+
+8.3. Select the environment you want to delete and press the Delete button.
+
+![go to cloud9 dashboard](https://raw.githubusercontent.com/perima/bia-workshop/master/images/8.3.png "go to Cloud9 dashboard") 
+
+8.4. Type **Delete** and press the **Delete** button.
+
+![go to cloud9 dashboard](https://raw.githubusercontent.com/perima/bia-workshop/master/images/8.4.png "go to Cloud9 dashboard") 
+
+# 9. Code 
+You can find the code for this workshop in the following github repo
+
+
+https://github.com/perima/bia-workshop
 
 
