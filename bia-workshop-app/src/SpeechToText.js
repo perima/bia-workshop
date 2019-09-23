@@ -108,7 +108,7 @@ function SpeechToText(props) {
           bytes
         },
        //   "MediaSampleRateHertz": 8000,
-      //   language: "en-GB", // other options are "en-US", "fr-FR", "fr-CA", "es-US"
+         language: "en-US", // other options are "en-US", "fr-FR", "fr-CA", "es-US"
       },
     }).then(({ transcription: { fullText } }) => {
         console.log('fulltext', fullText);
@@ -116,7 +116,7 @@ function SpeechToText(props) {
          props.parentCallback(fullText);
     })
       .catch(err => {
-          console.log(err);
+          console.log('error', err);
           setResponse(JSON.stringify(err, null, 2));
            props.parentCallback(JSON.stringify(err, null, 2));
       });
