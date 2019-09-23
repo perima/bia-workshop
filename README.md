@@ -1055,7 +1055,6 @@ In your Cloud9 IDE, right click on **src** folder and select New File. Name the 
 create file ```src/SpeechToText.js```
 
 ```javascript 
-
 /**
  * 
  * Building Intelligent Applications Workshop
@@ -1065,6 +1064,7 @@ create file ```src/SpeechToText.js```
  */
 import React, { useState } from 'react';
 
+import './App.css';
 import Amplify, { Storage, Predictions } from 'aws-amplify';
 import { AmazonAIPredictionsProvider } from '@aws-amplify/predictions';
 
@@ -1135,9 +1135,9 @@ function SpeechToText(props) {
       micStream.stop();
       setMicStream(null);
       setRecording(false);
-
+   
       const resultBuffer = audioBuffer.getData();
-
+         console.log('event', audioBuffer.event);
       if (typeof finishRecording === "function") {
         finishRecording(resultBuffer);
       }
@@ -1164,7 +1164,8 @@ function SpeechToText(props) {
         source: {
           bytes
         },
-         language: "en-GB", // other options are "en-US", "fr-FR", "fr-CA", "es-US"
+       //   "MediaSampleRateHertz": 8000,
+         language: "en-US", // other options are "en-US", "fr-FR", "fr-CA", "es-US"
       },
     }).then(({ transcription: { fullText } }) => {
         console.log('fulltext', fullText);
@@ -1172,7 +1173,7 @@ function SpeechToText(props) {
          props.parentCallback(fullText);
     })
       .catch(err => {
-          console.log(err);
+          console.log('error', err);
           setResponse(JSON.stringify(err, null, 2));
            props.parentCallback(JSON.stringify(err, null, 2));
       });
@@ -1187,7 +1188,6 @@ function SpeechToText(props) {
 }
 
 export default (SpeechToText);
-
 ```
 
 ## 5.4. Update src/app.js 
