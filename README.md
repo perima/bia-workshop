@@ -1034,7 +1034,7 @@ and select the following answers when prompted
 
 *Provide a friendly name for your resource* **[Press Enter to select suggested default name]**
 
-*What is the source language?* **British English** - or select desired supported language from the available list
+*What is the source language?* **US English** - or select desired supported language from the available list
 
 *Who should have access?* **Auth users only**
 
@@ -1164,8 +1164,7 @@ function SpeechToText(props) {
         source: {
           bytes
         },
-       //   "MediaSampleRateHertz": 8000,
-         language: "en-US", // other options are "en-US", "fr-FR", "fr-CA", "es-US"
+         language: "en-US", // other options are "en-US", "fr-FR", "fr-CA", "es-US" 
       },
     }).then(({ transcription: { fullText } }) => {
         console.log('fulltext', fullText);
