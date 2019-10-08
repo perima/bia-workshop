@@ -1038,6 +1038,7 @@ and select the following answers when prompted
 
 *Who should have access?* **Auth users only**
 
+
 5.1.2. Run ```amplify push``` to publish your backend changes to the cloud. Select **Y** when asked if you are sure you want to continue.
 
 ## 5.2. Add mic capture to our react application
