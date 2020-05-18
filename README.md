@@ -77,10 +77,6 @@ Run the following commands in your cloud9 terminal.
 # Update the AWS CLI
 pip install --user --upgrade awscli
 
-# Install and use Node.js v8.11 (to match AWS Lambda)
-nvm install v8.11.0
-nvm alias default v8.11.0
-
 # Install the AWS Amplify CLI
 npm install -g @aws-amplify/cli
 
@@ -310,23 +306,25 @@ export default App;
 
 ## 2.7. Initialize Amplify
 
-2.7.1. In your terminal (make sure you in the project source directory (bia-workshop/bia-workshop-app) run the  ``` amplify init``` command.
+2.7.1. In your terminal (make sure you in the project source directory (bia-workshop/bia-workshop-app) run the  command
+
+``` amplify init```
  
-2.7.2. Press Enter to accept the default project name (should be ‘bia-workshop-app’)
+2.7.2. Press enter to accept the default project name (should be **‘bia-workshop-app’**)
 
-2.7.3. Enter ‘dev’ for the environment name
+2.7.3. Enter **‘dev’** for the environment name
 
-2.7.4. Select ‘None’ for the default editor (we’re using Cloud9)
+2.7.4. Select **‘None’** for the default editor (we’re using Cloud9)
 
-2.7.5. Choose JavaScript and React when prompted
+2.7.5. Choose **JavaScript** and React when prompted
 
-2.7.6. Accept the default values for src/build paths 
+2.7.6. Accept the default values for **src** and **build** paths 
 
-2.7.7. Accept the default values for  build/start commands
+2.7.7. Accept the default values for  **build** **start** commands
 
-2.7.8. Press Enter to accept the default value (Y) to use AWS profile
+2.7.8. Press Enter to accept the default value (**Y**) to use AWS profile
 
-2.7.9. Press Enter to select the default AWS profile 
+2.7.9. Press Enter to select the **default** AWS profile 
 
 Please note that you are now provisioning your cloud backend for the first time which may take a couple of minutes.
 
@@ -335,7 +333,9 @@ Please note that you are now provisioning your cloud backend for the first time 
 # 2.8. Add Authentication
 We will start by adding authentation to our app to make sure that all AI services are available only to authenticated users.
 
-2.8.1. In the terminal execute the command ```amplify add auth```
+2.8.1. In the terminal execute the command 
+
+```amplify add auth```
 
 You will be asked a number of questions, please use the following values:
 
@@ -345,9 +345,11 @@ You will be asked a number of questions, please use the following values:
 
 - *Do you want to configure advanced settings?* **No, I am done.**
 
-2.8.2. In the terminal Run ```amplify push``` to publish your backend changes in the cloud.
+2.8.2. In the terminal run the command to publish your backend changes in the cloud:
 
-When asked *Are you sure you want to continue?* Press Enter.
+```amplify push``` 
+
+When asked **Are you sure you want to continue?** Press Enter.
 
 
 # 2.9. Install Amplify dependencies
@@ -355,7 +357,7 @@ When asked *Are you sure you want to continue?* Press Enter.
 2.9.1. In the terminal run the following command to install the necessary npm packages to our app
 
 ```bash
-npm install --save aws-amplify aws-amplify-react 
+npm install --save aws-amplify @aws-amplify/ui-react
 ``` 
  
 ## 2.10. Import amplify packages in our app.
@@ -363,13 +365,13 @@ Time to update the contents of src/app.js to include authentication.
 
 2.10.1. Import and configure the AWS Amplify JS library
 
-In your src/app.js file add the import statements for amplify and withAuthenticator auth comnponents near the top of the file after the line that reads ``` import 'typeface-roboto'; ```
+In your ```src/app.js``` file add the import statements for amplify and withAuthenticator auth comnponents near the top of the file after the line that reads ``` import 'typeface-roboto'; ```
 
 ```javascript
 import Amplify from 'aws-amplify';
-import aws_exports from './aws-exports';
-import { withAuthenticator } from 'aws-amplify-react';
-Amplify.configure(aws_exports); // aws-exports.js file is managed by AWS Amplify
+import awsExports from './aws-exports';
+import { withAuthenticator } from '@aws-amplify/ui-react';
+Amplify.configure(awsExports); // aws-exports.js file is managed by AWS Amplify
 ```
 
 2.10.2. Wrap the App component using withAuthenticator to make sure that its accessed only by authenticated users by replacing the last line that reads ``` export default App;  ``` with 
@@ -401,9 +403,9 @@ import Grid from '@material-ui/core/Grid';
 import 'typeface-roboto';
 
 import Amplify from 'aws-amplify';
-import aws_exports from './aws-exports';
-import { withAuthenticator } from 'aws-amplify-react';
-Amplify.configure(aws_exports); // aws-exports.js file is managed by AWS Amplify
+import awsExports from './aws-exports';
+import { withAuthenticator } from '@aws-amplify/ui-react';
+Amplify.configure(awsExports); // aws-exports.js file is managed by AWS Amplify
 
 class App extends Component {
 
@@ -526,9 +528,11 @@ export default withAuthenticator(App, { includeGreetings: true });
 
 2.11.1 Refresh yourpreview browser tab, you shoul be seeing a login screen asking for username and password.
 
-2.11.2 Click on the register link at the bottom to create a new account. **make sure you use a valid email address** for the registration as you will receive a code to complete the registration. 
+2.11.2 Click on the **Create account** link at the bottom to create a new account. **make sure you use a valid email address** for the registration as you will receive a code to complete the registration. 
 
-2.11.3 When you receive the email with the code, enter it to complete the registration. 
+![auth](https://raw.githubusercontent.com/perima/bia-workshop/master/images/2.11.2.png "create new app user account")
+
+2.11.3 When you receive the email with the code, sign-inm the enter your confirmation code that you received in your email address to complete the registration. 
 
 2.11.4 We now have working authentation for our app and you should be seeing the placeholders again but this time you are an authenticated user (you should be seeing a sign out button at the top right). 
 
@@ -553,12 +557,17 @@ The first AI service we will add to our application is Amazon Rekognition.
 
 - *Who should have access?* **Auth users only**
 
-3.1.3. We are now ready to publish our backend by running the command ```amplify push``` and press Enter when asked if you would like to proceed.
+3.1.3. We are now ready to publish our backend by running the command 
+
+```amplify push``` 
+
+press **enter** when asked if you would like to proceed.
 
 
 ## 3.2 create the LabelsIdentification component
 
-Create a file called ```src/LabelsIdentification.js``` and add the following content. You can create a file by right clicking the **src** folder in the tree navigation on the left of your Cloud9 environment and selecting **New File**.
+Create a file called ```src/LabelsIdentification.js``` and add the following content. 
+You can create a file by right clicking the **src** folder in the tree navigation on the left of your Cloud9 environment and selecting **New File**.
 
 
 ```javascript 
@@ -615,7 +624,7 @@ export default (LabelsIdentification);
 
 ## 3.3 update app.js to use the new LabelsIdentification component.
 
-3.3.1. Add the following import statement to your new component at the top just before the ```Amplify.configure(aws_exports);``` line. 
+3.3.1. Add the following import statement to your new component at the top just before the ```Amplify.configure(awsExports);``` line. 
 
 ```javascript 
 import LabelsIdentification from './LabelsIdentification' //rekognition
@@ -650,12 +659,13 @@ import Grid from '@material-ui/core/Grid';
 import 'typeface-roboto';
 
 import Amplify from 'aws-amplify';
-import aws_exports from './aws-exports';
+import awsExports from './aws-exports';
 import awsconfig from './aws-exports';
 
-import { withAuthenticator } from 'aws-amplify-react';
+import { withAuthenticator } from '@aws-amplify/ui-react';
+import LabelsIdentification from './LabelsIdentification' //rekognition
 
-Amplify.configure(aws_exports); // aws-exports.js file is managed by AWS Amplify
+Amplify.configure(awsExports); // aws-exports.js file is managed by AWS Amplify
 
 class App extends Component {
 
@@ -893,11 +903,11 @@ import Grid from '@material-ui/core/Grid';
 import 'typeface-roboto';
 
 import Amplify from 'aws-amplify';
-import aws_exports from './aws-exports';
-import { withAuthenticator } from 'aws-amplify-react';
+import awsExports from './aws-exports';
+import { withAuthenticator } from '@aws-amplify/ui-react';
 import LabelsIdentification from './LabelsIdentification' //rekognition
 import TextIdentification from './TextIdentification'; //textract 
-Amplify.configure(aws_exports); // aws-exports.js file is managed by AWS Amplify
+Amplify.configure(awsExports); // aws-exports.js file is managed by AWS Amplify
 
 
 class App extends Component {
@@ -1192,7 +1202,7 @@ export default (SpeechToText);
 
 ## 5.4. Update src/app.js 
 
-5.4.1. Add the import statement below at the top of your src/app.js file just before the Amplify.configure(aws_exports)
+5.4.1. Add the import statement below at the top of your src/app.js file just before the Amplify.configure(awsExports)
 
 ```javascript
 import SpeechToText from './SpeechToText'; // transcribe
@@ -1227,12 +1237,12 @@ import Grid from '@material-ui/core/Grid';
 import 'typeface-roboto';
 
 import Amplify from 'aws-amplify';
-import aws_exports from './aws-exports';
-import { withAuthenticator } from 'aws-amplify-react';
+import awsExports from './aws-exports';
+import { withAuthenticator } from '@aws-amplify/ui-react';
 import LabelsIdentification from './LabelsIdentification' //rekognition
 import TextIdentification from './TextIdentification'; //textract 
 import SpeechToText from './SpeechToText'; // transcribe
-Amplify.configure(aws_exports); // aws-exports.js file is managed by AWS Amplify
+Amplify.configure(awsExports); // aws-exports.js file is managed by AWS Amplify
 
 
 class App extends Component {
@@ -1442,7 +1452,7 @@ export default (TextInterpretation);
 
 ## 6.3 Update src/app.js
 
-6.3.1 Add the import statement for the new component just before the ```Amplify.configure(aws_exports);``` line.  
+6.3.1 Add the import statement for the new component just before the ```Amplify.configure(awsExports);``` line.  
 
 ```javascript 
 import TextInterpretation from './TextInterpretation'; // comprehend
@@ -1478,13 +1488,13 @@ import Grid from '@material-ui/core/Grid';
 import 'typeface-roboto';
 
 import Amplify from 'aws-amplify';
-import aws_exports from './aws-exports';
-import { withAuthenticator } from 'aws-amplify-react';
+import awsExports from './aws-exports';
+import { withAuthenticator } from '@aws-amplify/ui-react';
 import LabelsIdentification from './LabelsIdentification' //rekognition
 import TextIdentification from './TextIdentification'; //textract 
 import SpeechToText from './SpeechToText'; // transcribe
 import TextInterpretation from './TextInterpretation'; // comprehend
-Amplify.configure(aws_exports); // aws-exports.js file is managed by AWS Amplify
+Amplify.configure(awsExports); // aws-exports.js file is managed by AWS Amplify
 
 
 class App extends Component {
@@ -1701,7 +1711,7 @@ export default MyChatbox;
 
 ## 7.3 Add the new component to your src/app.js 
 
-7.3.1. Add the import statement of the new component near the top of your src/app.js file just before the  ```Amplify.configure(aws_exports);``` line. 
+7.3.1. Add the import statement of the new component near the top of your src/app.js file just before the  ```Amplify.configure(awsExports);``` line. 
 
 ```javascript
 import MyChatbox from './MyChatbox.js'; // lex
@@ -1736,14 +1746,14 @@ import Grid from '@material-ui/core/Grid';
 import 'typeface-roboto';
 
 import Amplify from 'aws-amplify';
-import aws_exports from './aws-exports';
-import { withAuthenticator } from 'aws-amplify-react';
+import awsExports from './aws-exports';
+import { withAuthenticator } from '@aws-amplify/ui-react';
 import LabelsIdentification from './LabelsIdentification' //rekognition
 import TextIdentification from './TextIdentification'; //textract 
 import SpeechToText from './SpeechToText'; // transcribe
 import TextInterpretation from './TextInterpretation'; // comprehend
 import MyChatbox from './MyChatbox.js'; // lex
-Amplify.configure(aws_exports); // aws-exports.js file is managed by AWS Amplify
+Amplify.configure(awsExports); // aws-exports.js file is managed by AWS Amplify
 
 
 class App extends Component {
