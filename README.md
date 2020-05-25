@@ -151,7 +151,7 @@ npm start
 cd bia-workshop-app/ 
 ```
 
-## 2.6 Clean up src/app.js 
+## 2.6 Clean up src/App.js 
 
 2.6.1. Using the navigation on the left of your Cloud9 IDE, expand the file tree and open the file ```bia-workshop/bia-workshop-app/src/App.js```
 
@@ -164,7 +164,7 @@ cd bia-workshop-app/
  * 
  * Building Intelligent Applications Workshop
  * 
- * src/app.js
+ * src/App.js
  * 
  */
 
@@ -302,7 +302,7 @@ export default App;
 
 2.6.4. Check your app preview browser tab, you should be seeing the app with the placeholders (click to expand each section). 
 
-![alt text](https://raw.githubusercontent.com/perima/bia-workshop/master/images/2.6.4.png "view revised app.js")
+![alt text](https://raw.githubusercontent.com/perima/bia-workshop/master/images/2.6.4.png "view revised App.js")
 
 ## 2.7. Initialize Amplify
 
@@ -380,14 +380,14 @@ Amplify.configure(awsExports); // aws-exports.js file is managed by AWS Amplify
 export default withAuthenticator(App, { includeGreetings: true });
 ```
 
-2.10.3. Your ```src/app.js``` file should like the one below
+2.10.3. Your ```src/App.js``` file should like the one below
 
 ```javascript
 /**
  * 
  * Building Intelligent Applications Workshop
  * 
- * src/app.js
+ * src/App.js
  * 
  */
 
@@ -622,7 +622,7 @@ export default (LabelsIdentification);
 
 ```
 
-## 3.3 update app.js to use the new LabelsIdentification component.
+## 3.3 update App.js to use the new LabelsIdentification component.
 
 3.3.1. Add the following import statement to your new component at the top just before the ```Amplify.configure(awsExports);``` line. 
 
@@ -636,14 +636,14 @@ import LabelsIdentification from './LabelsIdentification' //rekognition
  <LabelsIdentification  parentCallback={this.callbackFunction} />
 ```
 
-3.3.4. Your src/app.js file should look like the below
+3.3.4. Your src/App.js file should look like the below
 
 ```javascript
 /**
  * 
  * Building Intelligent Applications Workshop
  * 
- * src/app.js
+ * src/App.js
  * 
  */
 
@@ -873,9 +873,9 @@ export default (TextIdentification);
 
 ```
 
-## 4.3. Import the new react component into app.js
+## 4.3. Import the new react component into App.js
 
-4.3.1. Add the new component in your imports at the top of the src/app.js file
+4.3.1. Add the new component in your imports at the top of the src/App.js file
 
 ```javascript 
 import TextIdentification from './TextIdentification'; //textract 
@@ -887,14 +887,14 @@ import TextIdentification from './TextIdentification'; //textract
 <TextIdentification parentCallback={this.callbackFunction} /> 
 ```
 
-Your src/app.js shoud look like the one below
+Your src/App.js shoud look like the one below
 
 ```javascript
 /**
  * 
  * Building Intelligent Applications Workshop
  * 
- * src/app.js
+ * src/App.js
  * 
  */
 
@@ -1211,9 +1211,9 @@ function SpeechToText(props) {
 export default (SpeechToText);
 ```
 
-## 5.4. Update src/app.js 
+## 5.4. Update src/App.js 
 
-5.4.1. Add the import statement below at the top of your src/app.js file just before the Amplify.configure(awsExports)
+5.4.1. Add the import statement below at the top of your src/App.js file just before the Amplify.configure(awsExports)
 
 ```javascript
 import SpeechToText from './SpeechToText'; // transcribe
@@ -1225,14 +1225,14 @@ import SpeechToText from './SpeechToText'; // transcribe
   <SpeechToText parentCallback={this.callbackFunction} />
 ```
 
-Your **src/app.js** file should look like the one below 
+Your **src/App.js** file should look like the one below 
 
 ```javascript
 /**
  * 
  * Building Intelligent Applications Workshop
  * 
- * src/app.js
+ * src/App.js
  * 
  */
 
@@ -1464,7 +1464,7 @@ export default (TextInterpretation);
 
 ```
 
-## 6.3 Update src/app.js
+## 6.3 Update src/App.js
 
 6.3.1 Add the import statement for the new component just before the ```Amplify.configure(awsExports);``` line.  
 
@@ -1479,14 +1479,14 @@ import TextInterpretation from './TextInterpretation'; // comprehend
  
 ```
 
-Your src.app.js should look like the one below
+Your src.App.js should look like the one below
 
 ```javascript
 /**
  * 
  * Building Intelligent Applications Workshop
  * 
- * src/app.js
+ * src/App.js
  * 
  */
 
@@ -1724,9 +1724,9 @@ class MyChatbox extends Component {
 export default MyChatbox;
 ```
 
-## 7.3 Add the new component to your src/app.js 
+## 7.3 Add the new component to your src/App.js 
 
-7.3.1. Add the import statement of the new component near the top of your src/app.js file just before the  ```Amplify.configure(awsExports);``` line. 
+7.3.1. Add the import statement of the new component near the top of your src/App.js file just before the  ```Amplify.configure(awsExports);``` line. 
 
 ```javascript
 import MyChatbox from './MyChatbox.js'; // lex
@@ -1738,14 +1738,14 @@ import MyChatbox from './MyChatbox.js'; // lex
   <MyChatbox />
 ```
 
-Your src/app.js file should like the one below
+Your src/App.js file should like the one below
 
 ```javascript 
 /**
  * 
  * Building Intelligent Applications Workshop
  * 
- * src/app.js
+ * src/App.js
  * 
  */
 
