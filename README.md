@@ -1056,14 +1056,18 @@ and select the following answers when prompted
 *Who should have access?* **Auth users only**
 
 
-5.1.2. Run ```amplify push``` to publish your backend changes to the cloud. Select **Y** when asked if you are sure you want to continue.
+5.1.2. Run the command to publish your backend changes to the cloud. Select **Y** when asked if you are sure you want to continue:
+
+```amplify push```
 
 ## 5.2. Add mic capture to our react application
 
 Your application needs to be able to capture audio. In your Cloud9 terminal, run the  command 
+
 ```bash 
 npm install --save microphone-stream
 ``` 
+
 to add mic audio capture capability to your application. Please note depending on browser and system defaults you may not capture audio in a format that is expected by Amazon Transcribe (in which case you will get an error in your app).
 
 ## 5.3. Create component to handle audio capture and transcription ## 
@@ -1380,6 +1384,7 @@ Once you saved the changes, go back to your browser application preview tab and 
 ## 6.1 Update your cloud backend 
 
 6.1.1. Run the following command in your Cloud9 terminal  
+
 ```bash 
 amplify add predictions
 ```
@@ -1388,7 +1393,7 @@ amplify add predictions
 
 *Please select from one of the categories below* **Interpret**
 
-*What would you like to interpret? Interpret* **Text**
+*What would you like to interpret? **Interpret Text**
 
 *Provide a friendly name for your resource* **[Press Enter to accept the name suggested]**
 
@@ -1396,7 +1401,9 @@ amplify add predictions
 
 *Who should have access?* **Auth users only**
 
-6.1.3. It's now time to publish our backend changes to the cloud. Run the command ```amplify push``` and select **Y** when asked if you want to continue.
+6.1.3. It's now time to publish our backend changes to the cloud. Run the command and select **Y** when asked if you want to continue:
+
+```amplify push``` 
 
 ## 6.2 Create react component for comprehend 
 
@@ -1465,7 +1472,7 @@ export default (TextInterpretation);
 import TextInterpretation from './TextInterpretation'; // comprehend
 ```
 
-6.3.2 Now replace the placeholder text **** with the actual component.
+6.3.2 Now replace the placeholder text **Add text interpretation component here...** with the actual component.
 
 ```javascript
  <TextInterpretation parentCallback={this.callbackFunction} />
