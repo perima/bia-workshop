@@ -826,8 +826,12 @@ amplify push
  * 
  */
 import React, { useState } from 'react';
-import Amplify, { Storage, Predictions } from 'aws-amplify';
+import Amplify from 'aws-amplify';
+import Predictions, { AmazonAIPredictionsProvider } from '@aws-amplify/predictions';
 import awsconfig from './aws-exports';
+
+Amplify.configure(awsconfig);
+
 
 function TextIdentification(props) {
 
@@ -857,6 +861,9 @@ function TextIdentification(props) {
   return (
     <div className="Text">
         <h3>Text identification</h3>
+        Please select an image as input document.Documents for synchronous operations can be in PNG or JPEG format. 
+        Documents for asynchronous operations can also be in PDF format. <a href="https://docs.aws.amazon.com/textract/latest/dg/API_DetectDocumentText.html">Read more</a>
+        <br /><br />
         <input type="file" onChange={identifyFromFile}></input>
     </div>
   );
