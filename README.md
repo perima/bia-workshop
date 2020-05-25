@@ -1650,14 +1650,15 @@ amplify add interactions
 *Please indicate if your use of this bot is subject to the Children's Online Privacy Protection Act (COPPA).*
 *Learn more: https://www.ftc.gov/tips-advice/business-center/guidance/complying-coppa-frequently-asked-questions* **No**
 
-7.1.3. Run the command ```amplify push``` to publish your changes to your cloud backend. Answer **Y** when asked if you are sure you want to continue.
+7.1.3. Run the command to publish your changes to your cloud backend. Answer **Y** when asked if you are sure you want to continue:
 
+```amplify push```
 
 7.1.4. Get the name of your newly created bot. 
 
 Go to the Lex console https://us-west-2.console.aws.amazon.com/lex/home to get the name of your newly created flower bot. 
 
-![alt text](https://raw.githubusercontent.com/perima/bia-workshop/master/images/7.1.4png "select correct region!")
+![alt text](https://raw.githubusercontent.com/perima/bia-workshop/master/images/7.1.4.png "select correct region!")
 
 7.1.5. Take a moment to look at the bot settings in the console.
 
