@@ -29,7 +29,7 @@ We recommend following the steps in this workshop in the order they are presente
 ## 1.1 Create new environment
 1.1.1 Go to the [Cloud9 web console](https://us-west-2.console.aws.amazon.com/cloud9/home/product).
 
-1.1.2. At the top right corner of the console, make sure you’re using one of these regions: Virginia (us-east-1), Oregon (us-west-2), Ireland (eu-west-1) or Singapore (ap-southeast-1).
+1.1.2. At the top right corner of the console, make sure you’re using one of these regions: Virginia (us-east-1), Oregon (us-west-2), Ireland (eu-west-1), Singapore (ap-southeast-1) or Sydney (ap-southeast-2).
 
 1.1.3. Press **Create environment**
 
@@ -91,7 +91,7 @@ Configure default AWS region for Amplify CLI, please note we are using us-west-2
 ```bash
 cat <<END > ~/.aws/config
 [default]
-region=us-west-2
+region=ap-southeast-2
 END
 ```
 
@@ -153,22 +153,22 @@ npm start
 2.5.2. In the new terminal run the following command to switch to the app directory.
 ```bash 
 cd bia-workshop-app/ 
-``` 
+```
 
-## 2.6 Clean up src/app.js 
+## 2.6 Clean up src/App.js 
 
 2.6.1. Using the navigation on the left of your Cloud9 IDE, expand the file tree and open the file ```bia-workshop/bia-workshop-app/src/App.js```
 
 ![alt text](https://raw.githubusercontent.com/perima/bia-workshop/master/images/2.6.1.png "open additional terminal")
 
-2.6.2. Replace the contents of src/app.js file with the below code. Its our entry point for our single page application and contains placeholders for the various components we will be building through out this workshop. 
+2.6.2. Replace the contents of src/App.js file with the below code. Its our entry point for our single page application and contains placeholders for the various components we will be building through out this workshop. 
 
 ```javascript
 /**
  * 
  * Building Intelligent Applications Workshop
  * 
- * src/app.js
+ * src/App.js
  * 
  */
 
@@ -184,20 +184,16 @@ import Grid from '@material-ui/core/Grid';
 import 'typeface-roboto';
 
 
-
 class App extends Component {
 
     state = { response: "" }
-
 
     callbackFunction = (childData) => {
         console.log('parent state');
         this.setState({ response: childData });
     }
 
-
     render() {
-
         const classes = makeStyles(theme => ({
             root: {
                 width: '100%',
@@ -210,92 +206,85 @@ class App extends Component {
 
         return (
             <div className={classes.root}>
-    
-      <Grid container direction="row" alignItems="flex-start" spacing={2}>
-           
-             <Grid item xs={5}>
-                <Typography className={classes.heading}></Typography>
-                <Typography variant="h4" component="h4" align="center">Building Intelligent Applications Workshop</Typography>
-                    <ExpansionPanel>
-                    <ExpansionPanelSummary
-                      aria-controls="panel1a-content"
-                      id="panel1a-header"
-                    >
-                      <Typography className={classes.heading}>Generate labels for objects in an image</Typography>
-                    </ExpansionPanelSummary>
-                    <ExpansionPanelDetails>
-                        Add Label Identification component here...
-                    </ExpansionPanelDetails>
-                  </ExpansionPanel>
-                  
-                  <ExpansionPanel>
-                    <ExpansionPanelSummary
-                      aria-controls="panel2a-content"
-                      id="panel2a-header"
-                    >
-                      <Typography className={classes.heading}>Extract text from images or documents</Typography>
-                    </ExpansionPanelSummary>
-                    <ExpansionPanelDetails>
-                        Add text extraction component here...
-                    </ExpansionPanelDetails>
-                  </ExpansionPanel>
-                  
-                  <ExpansionPanel>
-                    <ExpansionPanelSummary
-                      aria-controls="panel2a-content"
-                      id="panel2a-header"
-                    >
-                      <Typography className={classes.heading}>Transcribe audio</Typography>
-                    </ExpansionPanelSummary>
-                    <ExpansionPanelDetails>
-                       Add audio transcribe component here...
-                    </ExpansionPanelDetails>
-                  </ExpansionPanel>
-                  
-                   <ExpansionPanel>
-                    <ExpansionPanelSummary
-                      aria-controls="panel2a-content"
-                      id="panel2a-header"
-                    >
-                      <Typography className={classes.heading}>Text interpretation</Typography>
-                    </ExpansionPanelSummary>
-                    <ExpansionPanelDetails>
-                         Add text interpretation component here...
-                    </ExpansionPanelDetails>
-                  </ExpansionPanel>
-                  
-                   <ExpansionPanel>
-                    <ExpansionPanelSummary
-                      aria-controls="panel2a-content"
-                      id="panel2a-header"
-                    >
-                      <Typography className={classes.heading}>Chatbot</Typography>
-                    </ExpansionPanelSummary>
-                    <ExpansionPanelDetails>
-                        Add chatbot component here
-                    </ExpansionPanelDetails>
-                  </ExpansionPanel>
-                  
-             </Grid>
-             
-               <Grid item xs={7}>
-                 <TextField
-                    id="outlined-multiline-flexible"
-                    label="output"
-                    multiline
-                    fullWidth
-                    rows="30"
-                    value={this.state.response}
-                    margin="normal"
-                    variant="outlined"
-                  />
-              </Grid>
-      </Grid>
-     
-    </div>
+
+                <Grid container direction="row" alignItems="flex-start" spacing={2}>
+
+                    <Grid item xs={5}>
+                        <Typography className={classes.heading}></Typography>
+                        <Typography variant="h4" component="h4" align="center">Building Intelligent Applications Workshop</Typography>
+
+                        <ExpansionPanel>
+                            <ExpansionPanelSummary
+                              aria-controls="panel1a-content"
+                              id="panel1a-header">
+                                <Typography className={classes.heading}>Generate labels for objects in an image</Typography>
+                            </ExpansionPanelSummary>
+                            <ExpansionPanelDetails>
+                                Add Label Identification component here...
+                            </ExpansionPanelDetails>
+                        </ExpansionPanel>
+
+                        <ExpansionPanel>
+                            <ExpansionPanelSummary
+                              aria-controls="panel2a-content"
+                              id="panel2a-header">
+                                <Typography className={classes.heading}>Extract text from images or documents</Typography>
+                            </ExpansionPanelSummary>
+                            <ExpansionPanelDetails>
+                                Add text extraction component here...
+                            </ExpansionPanelDetails>
+                        </ExpansionPanel>
+
+                        <ExpansionPanel>
+                            <ExpansionPanelSummary
+                              aria-controls="panel2a-content"
+                              id="panel2a-header">
+                                <Typography className={classes.heading}>Transcribe audio</Typography>
+                            </ExpansionPanelSummary>
+                            <ExpansionPanelDetails>
+                                Add audio transcribe component here...
+                            </ExpansionPanelDetails>
+                        </ExpansionPanel>
+
+                        <ExpansionPanel>
+                            <ExpansionPanelSummary
+                              aria-controls="panel2a-content"
+                              id="panel2a-header">
+                                <Typography className={classes.heading}>Text interpretation</Typography>
+                            </ExpansionPanelSummary>
+                            <ExpansionPanelDetails>
+                                Add text interpretation component here...
+                            </ExpansionPanelDetails>
+                        </ExpansionPanel>
+
+                        <ExpansionPanel>
+                            <ExpansionPanelSummary
+                              aria-controls="panel2a-content"
+                              id="panel2a-header">
+                                <Typography className={classes.heading}>Chatbot</Typography>
+                            </ExpansionPanelSummary>
+                            <ExpansionPanelDetails>
+                                Add chatbot component here
+                            </ExpansionPanelDetails>
+                        </ExpansionPanel>
+
+                    </Grid>
+
+                    <Grid item xs={7}>
+                        <TextField
+                           id="outlined-multiline-flexible"
+                           label="output"
+                           multiline
+                           fullWidth
+                           rows="30"
+                           value={this.state.response}
+                           margin="normal"
+                           variant="outlined"/>
+                    </Grid>
+                </Grid>
+            </div>
         );
     }
-
 }
 
 export default App; 
@@ -306,15 +295,15 @@ export default App;
 
 2.6.4. Check your app preview browser tab, you should be seeing the app with the placeholders (click to expand each section). 
 
-![alt text](https://raw.githubusercontent.com/perima/bia-workshop/master/images/2.6.4.png "view revised app.js")
+![alt text](https://raw.githubusercontent.com/perima/bia-workshop/master/images/2.6.4.png "view revised App.js")
 
 ## 2.7. Initialize Amplify
 
 2.7.1. In your terminal (make sure you in the project source directory (bia-workshop/bia-workshop-app) run the  command
 
 ``` amplify init```
- 
-2.7.2. Press enter to accept the default project name (should be **‘bia-workshop-app’**)
+
+2.7.2. Press enter to accept the default project name (should be **‘biaworkshopapp’**)
 
 2.7.3. Enter **‘dev’** for the environment name
 
@@ -362,19 +351,20 @@ When asked **Are you sure you want to continue?** Press Enter.
 
 ```bash
 npm install --save aws-amplify @aws-amplify/ui-react
-``` 
- 
+```
+
 ## 2.10. Import amplify packages in our app.
-Time to update the contents of src/app.js to include authentication.
+Time to update the contents of src/App.js to include authentication.
 
 2.10.1. Import and configure the AWS Amplify JS library
 
-In your ```src/app.js``` file add the import statements for amplify and withAuthenticator auth comnponents near the top of the file after the line that reads ``` import 'typeface-roboto'; ```
+In your ```src/App.js``` file add the import statements for amplify and withAuthenticator auth comnponents near the top of the file after the line that reads ``` import 'typeface-roboto'; ```
 
 ```javascript
 import Amplify from 'aws-amplify';
 import awsExports from './aws-exports';
 import { withAuthenticator } from '@aws-amplify/ui-react';
+
 Amplify.configure(awsExports); // aws-exports.js file is managed by AWS Amplify
 ```
 
@@ -384,14 +374,14 @@ Amplify.configure(awsExports); // aws-exports.js file is managed by AWS Amplify
 export default withAuthenticator(App, { includeGreetings: true });
 ```
 
-2.10.3. Your ```src/app.js``` file should like the one below
+2.10.3. Your ```src/App.js``` file should like the one below
 
 ```javascript
 /**
  * 
  * Building Intelligent Applications Workshop
  * 
- * src/app.js
+ * src/App.js
  * 
  */
 
@@ -409,21 +399,19 @@ import 'typeface-roboto';
 import Amplify from 'aws-amplify';
 import awsExports from './aws-exports';
 import { withAuthenticator } from '@aws-amplify/ui-react';
+
 Amplify.configure(awsExports); // aws-exports.js file is managed by AWS Amplify
 
 class App extends Component {
 
     state = { response: "" }
 
-
     callbackFunction = (childData) => {
         console.log('parent state');
         this.setState({ response: childData });
     }
 
-
     render() {
-
         const classes = makeStyles(theme => ({
             root: {
                 width: '100%',
@@ -436,92 +424,85 @@ class App extends Component {
 
         return (
             <div className={classes.root}>
-    
-      <Grid container direction="row" alignItems="flex-start" spacing={2}>
-           
-             <Grid item xs={5}>
-                <Typography className={classes.heading}></Typography>
-                <Typography variant="h4" component="h4" align="center">Building Intelligent Applications Workshop</Typography>
-                    <ExpansionPanel>
-                    <ExpansionPanelSummary
-                      aria-controls="panel1a-content"
-                      id="panel1a-header"
-                    >
-                      <Typography className={classes.heading}>Generate labels for objects in an image</Typography>
-                    </ExpansionPanelSummary>
-                    <ExpansionPanelDetails>
-                        Add Label Identification component here...
-                    </ExpansionPanelDetails>
-                  </ExpansionPanel>
-                  
-                  <ExpansionPanel>
-                    <ExpansionPanelSummary
-                      aria-controls="panel2a-content"
-                      id="panel2a-header"
-                    >
-                      <Typography className={classes.heading}>Extract text from images or documents</Typography>
-                    </ExpansionPanelSummary>
-                    <ExpansionPanelDetails>
-                        Add text extraction component here...
-                    </ExpansionPanelDetails>
-                  </ExpansionPanel>
-                  
-                  <ExpansionPanel>
-                    <ExpansionPanelSummary
-                      aria-controls="panel2a-content"
-                      id="panel2a-header"
-                    >
-                      <Typography className={classes.heading}>Transcribe audio</Typography>
-                    </ExpansionPanelSummary>
-                    <ExpansionPanelDetails>
-                       Add audio transcribe component here...
-                    </ExpansionPanelDetails>
-                  </ExpansionPanel>
-                  
-                   <ExpansionPanel>
-                    <ExpansionPanelSummary
-                      aria-controls="panel2a-content"
-                      id="panel2a-header"
-                    >
-                      <Typography className={classes.heading}>Text interpretation</Typography>
-                    </ExpansionPanelSummary>
-                    <ExpansionPanelDetails>
-                         Add text interpretation component here...
-                    </ExpansionPanelDetails>
-                  </ExpansionPanel>
-                  
-                   <ExpansionPanel>
-                    <ExpansionPanelSummary
-                      aria-controls="panel2a-content"
-                      id="panel2a-header"
-                    >
-                      <Typography className={classes.heading}>Chatbot</Typography>
-                    </ExpansionPanelSummary>
-                    <ExpansionPanelDetails>
-                        Add chatbot component here
-                    </ExpansionPanelDetails>
-                  </ExpansionPanel>
-                  
-             </Grid>
-             
-               <Grid item xs={7}>
-                 <TextField
-                    id="outlined-multiline-flexible"
-                    label="output"
-                    multiline
-                    fullWidth
-                    rows="30"
-                    value={this.state.response}
-                    margin="normal"
-                    variant="outlined"
-                  />
-              </Grid>
-      </Grid>
-     
-    </div>
+
+                <Grid container direction="row" alignItems="flex-start" spacing={2}>
+
+                    <Grid item xs={5}>
+                        <Typography className={classes.heading}></Typography>
+                        <Typography variant="h4" component="h4" align="center">Building Intelligent Applications Workshop</Typography>
+
+                        <ExpansionPanel>
+                            <ExpansionPanelSummary
+                              aria-controls="panel1a-content"
+                              id="panel1a-header">
+                                <Typography className={classes.heading}>Generate labels for objects in an image</Typography>
+                            </ExpansionPanelSummary>
+                            <ExpansionPanelDetails>
+                                Add Label Identification component here...
+                            </ExpansionPanelDetails>
+                        </ExpansionPanel>
+
+                        <ExpansionPanel>
+                            <ExpansionPanelSummary
+                              aria-controls="panel2a-content"
+                              id="panel2a-header">
+                                <Typography className={classes.heading}>Extract text from images or documents</Typography>
+                            </ExpansionPanelSummary>
+                            <ExpansionPanelDetails>
+                                Add text extraction component here...
+                            </ExpansionPanelDetails>
+                        </ExpansionPanel>
+
+                        <ExpansionPanel>
+                            <ExpansionPanelSummary
+                              aria-controls="panel2a-content"
+                              id="panel2a-header">
+                                <Typography className={classes.heading}>Transcribe audio</Typography>
+                            </ExpansionPanelSummary>
+                            <ExpansionPanelDetails>
+                                 Add audio transcribe component here...
+                            </ExpansionPanelDetails>
+                        </ExpansionPanel>
+
+                        <ExpansionPanel>
+                            <ExpansionPanelSummary
+                              aria-controls="panel2a-content"
+                              id="panel2a-header">
+                                <Typography className={classes.heading}>Text interpretation</Typography>
+                            </ExpansionPanelSummary>
+                            <ExpansionPanelDetails>
+                                Add text interpretation component here...
+                            </ExpansionPanelDetails>
+                        </ExpansionPanel>
+
+                        <ExpansionPanel>
+                            <ExpansionPanelSummary
+                              aria-controls="panel2a-content"
+                              id="panel2a-header">
+                                <Typography className={classes.heading}>Chatbot</Typography>
+                            </ExpansionPanelSummary>
+                            <ExpansionPanelDetails>
+                                Add chatbot component here
+                            </ExpansionPanelDetails>
+                        </ExpansionPanel>
+
+                    </Grid>
+
+                    <Grid item xs={7}>
+                        <TextField
+                           id="outlined-multiline-flexible"
+                           label="output"
+                           multiline
+                           fullWidth
+                           rows="30"
+                           value={this.state.response}
+                           margin="normal"
+                           variant="outlined"/>
+                    </Grid>
+                </Grid>
+            </div>
         );
     }
-
 }
 
 export default withAuthenticator(App, { includeGreetings: true });
@@ -536,7 +517,7 @@ export default withAuthenticator(App, { includeGreetings: true });
 
 ![auth](https://raw.githubusercontent.com/perima/bia-workshop/master/images/2.11.2.png "create new app user account")
 
-2.11.3 When you receive the email with the code, sign-inm the enter your confirmation code that you received in your email address to complete the registration. 
+2.11.3 When you receive the email with the confirmation code, use your confirmation code to sign-in and to complete the registration. 
 
 2.11.4 We now have working authentation for our app and you should be seeing the placeholders again but this time you are an authenticated user (you should be seeing a sign out button at the top right). 
 
@@ -599,19 +580,19 @@ function LabelsIdentification(props) {
     if (!file) {
       return;
     }
+
     Predictions.identify({
-        labels: {
-          source: {
-            file,
-          },
-          type: "ALL" // "LABELS" will detect objects , "UNSAFE" will detect if content is not safe, "ALL" will do both default on aws-exports.js
-        }
+      labels: {
+        source: {
+          file,
+        },
+        type: "ALL" // "LABELS" will detect objects , "UNSAFE" will detect if content is not safe, "ALL" will do both default on aws-exports.js
+      }
     }).then(result => {
       props.parentCallback(JSON.stringify(result, null, 2));
-    })
-      .catch(err => {
-         props.parentCallback(JSON.stringify(err, null, 2));
-      });
+    }).catch(err => {
+      props.parentCallback(JSON.stringify(err, null, 2));
+    });
   }
 
   return (
@@ -626,7 +607,7 @@ export default (LabelsIdentification);
 
 ```
 
-## 3.3 update app.js to use the new LabelsIdentification component.
+## 3.3 update App.js to use the new LabelsIdentification component.
 
 3.3.1. Add the following import statement to your new component at the top just before the ```Amplify.configure(awsExports);``` line. 
 
@@ -640,14 +621,14 @@ import LabelsIdentification from './LabelsIdentification' //rekognition
  <LabelsIdentification  parentCallback={this.callbackFunction} />
 ```
 
-3.3.4. Your src/app.js file should look like the below
+3.3.4. Your src/App.js file should look like the below
 
 ```javascript
 /**
  * 
  * Building Intelligent Applications Workshop
  * 
- * src/app.js
+ * src/App.js
  * 
  */
 
@@ -664,9 +645,8 @@ import 'typeface-roboto';
 
 import Amplify from 'aws-amplify';
 import awsExports from './aws-exports';
-import awsconfig from './aws-exports';
-
 import { withAuthenticator } from '@aws-amplify/ui-react';
+
 import LabelsIdentification from './LabelsIdentification' //rekognition
 
 Amplify.configure(awsExports); // aws-exports.js file is managed by AWS Amplify
@@ -675,15 +655,12 @@ class App extends Component {
 
     state = { response: "" }
 
-
     callbackFunction = (childData) => {
         console.log('parent state');
         this.setState({ response: childData });
     }
 
-
     render() {
-
         const classes = makeStyles(theme => ({
             root: {
                 width: '100%',
@@ -696,95 +673,89 @@ class App extends Component {
 
         return (
             <div className={classes.root}>
-    
-      <Grid container direction="row" alignItems="flex-start" spacing={2}>
-           
-             <Grid item xs={5}>
-                <Typography className={classes.heading}></Typography>
-                <Typography variant="h4" component="h4" align="center">Building Intelligent Applications Workshop</Typography>
-                    <ExpansionPanel>
-                    <ExpansionPanelSummary
-                      aria-controls="panel1a-content"
-                      id="panel1a-header"
-                    >
-                      <Typography className={classes.heading}>Generate labels for objects in an image</Typography>
-                    </ExpansionPanelSummary>
-                    <ExpansionPanelDetails>
-                        <LabelsIdentification  parentCallback={this.callbackFunction} />
-                    </ExpansionPanelDetails>
-                  </ExpansionPanel>
-                  
-                  <ExpansionPanel>
-                    <ExpansionPanelSummary
-                      aria-controls="panel2a-content"
-                      id="panel2a-header"
-                    >
-                      <Typography className={classes.heading}>Extract text from images or documents</Typography>
-                    </ExpansionPanelSummary>
-                    <ExpansionPanelDetails>
-                        Add text extraction component here...
-                    </ExpansionPanelDetails>
-                  </ExpansionPanel>
-                  
-                  <ExpansionPanel>
-                    <ExpansionPanelSummary
-                      aria-controls="panel2a-content"
-                      id="panel2a-header"
-                    >
-                      <Typography className={classes.heading}>Transcribe audio</Typography>
-                    </ExpansionPanelSummary>
-                    <ExpansionPanelDetails>
-                       Add audio transcribe component here...
-                    </ExpansionPanelDetails>
-                  </ExpansionPanel>
-                  
-                   <ExpansionPanel>
-                    <ExpansionPanelSummary
-                      aria-controls="panel2a-content"
-                      id="panel2a-header"
-                    >
-                      <Typography className={classes.heading}>Text interpretation</Typography>
-                    </ExpansionPanelSummary>
-                    <ExpansionPanelDetails>
-                         Add text interpretation component here...
-                    </ExpansionPanelDetails>
-                  </ExpansionPanel>
-                  
-                   <ExpansionPanel>
-                    <ExpansionPanelSummary
-                      aria-controls="panel2a-content"
-                      id="panel2a-header"
-                    >
-                      <Typography className={classes.heading}>Chatbot</Typography>
-                    </ExpansionPanelSummary>
-                    <ExpansionPanelDetails>
-                        Add chatbot component here
-                    </ExpansionPanelDetails>
-                  </ExpansionPanel>
-                  
-             </Grid>
-             
-               <Grid item xs={7}>
-                 <TextField
-                    id="outlined-multiline-flexible"
-                    label="output"
-                    multiline
-                    fullWidth
-                    rows="30"
-                    value={this.state.response}
-                    margin="normal"
-                    variant="outlined"
-                  />
-              </Grid>
-      </Grid>
-     
-    </div>
+
+                <Grid container direction="row" alignItems="flex-start" spacing={2}>
+
+                    <Grid item xs={5}>
+                        <Typography className={classes.heading}></Typography>
+                        <Typography variant="h4" component="h4" align="center">Building Intelligent Applications Workshop</Typography>
+
+                        <ExpansionPanel>
+                            <ExpansionPanelSummary
+                              aria-controls="panel1a-content"
+                              id="panel1a-header">
+                                <Typography className={classes.heading}>Generate labels for objects in an image</Typography>
+                            </ExpansionPanelSummary>
+                            <ExpansionPanelDetails>
+                                <LabelsIdentification  parentCallback={this.callbackFunction} />
+                            </ExpansionPanelDetails>
+                        </ExpansionPanel>
+
+                        <ExpansionPanel>
+                            <ExpansionPanelSummary
+                              aria-controls="panel2a-content"
+                              id="panel2a-header">
+                                <Typography className={classes.heading}>Extract text from images or documents</Typography>
+                            </ExpansionPanelSummary>
+                            <ExpansionPanelDetails>
+                                Add text extraction component here...
+                            </ExpansionPanelDetails>
+                        </ExpansionPanel>
+
+                        <ExpansionPanel>
+                            <ExpansionPanelSummary
+                              aria-controls="panel2a-content"
+                              id="panel2a-header">
+                                <Typography className={classes.heading}>Transcribe audio</Typography>
+                            </ExpansionPanelSummary>
+                            <ExpansionPanelDetails>
+                                 Add audio transcribe component here...
+                            </ExpansionPanelDetails>
+                        </ExpansionPanel>
+
+                        <ExpansionPanel>
+                            <ExpansionPanelSummary
+                              aria-controls="panel2a-content"
+                              id="panel2a-header">
+                                <Typography className={classes.heading}>Text interpretation</Typography>
+                            </ExpansionPanelSummary>
+                            <ExpansionPanelDetails>
+                                Add text interpretation component here...
+                            </ExpansionPanelDetails>
+                        </ExpansionPanel>
+
+                        <ExpansionPanel>
+                            <ExpansionPanelSummary
+                              aria-controls="panel2a-content"
+                              id="panel2a-header">
+                                <Typography className={classes.heading}>Chatbot</Typography>
+                            </ExpansionPanelSummary>
+                            <ExpansionPanelDetails>
+                                Add chatbot component here
+                            </ExpansionPanelDetails>
+                        </ExpansionPanel>
+
+                    </Grid>
+
+                    <Grid item xs={7}>
+                        <TextField
+                           id="outlined-multiline-flexible"
+                           label="output"
+                           multiline
+                           fullWidth
+                           rows="30"
+                           value={this.state.response}
+                           margin="normal"
+                           variant="outlined"/>
+                    </Grid>
+                </Grid>
+            </div>
         );
     }
-
 }
 
 export default withAuthenticator(App, { includeGreetings: true });
+
 ```
 
 3.3.5. You should be able to test now the label detection functionality of your app by refreshing your preview browser tab.
@@ -814,7 +785,7 @@ amplify add predictions
 4.1.3. Run the following command to update your cloud backend and select **Yes** when asked if you want to proceed.
 ```bash 
 amplify push
-``` 
+```
 
 
 ## 4.2. Create the text identification react component 
@@ -877,9 +848,9 @@ export default (TextIdentification);
 
 ```
 
-## 4.3. Import the new react component into app.js
+## 4.3. Import the new react component into App.js
 
-4.3.1. Add the new component in your imports at the top of the src/app.js file
+4.3.1. Add the new component in your imports at the top of the src/App.js file
 
 ```javascript 
 import TextIdentification from './TextIdentification'; //textract 
@@ -891,14 +862,14 @@ import TextIdentification from './TextIdentification'; //textract
 <TextIdentification parentCallback={this.callbackFunction} /> 
 ```
 
-Your src/app.js shoud look like the one below
+Your src/App.js shoud look like the one below
 
 ```javascript
 /**
  * 
  * Building Intelligent Applications Workshop
  * 
- * src/app.js
+ * src/App.js
  * 
  */
 
@@ -1070,7 +1041,7 @@ Your application needs to be able to capture audio. In your Cloud9 terminal, run
 
 ```bash 
 npm install --save microphone-stream
-``` 
+```
 
 to add mic audio capture capability to your application. Please note depending on browser and system defaults you may not capture audio in a format that is expected by Amazon Transcribe (in which case you will get an error in your app).
 
@@ -1215,9 +1186,9 @@ function SpeechToText(props) {
 export default (SpeechToText);
 ```
 
-## 5.4. Update src/app.js 
+## 5.4. Update src/App.js 
 
-5.4.1. Add the import statement below at the top of your src/app.js file just before the Amplify.configure(awsExports)
+5.4.1. Add the import statement below at the top of your src/App.js file just before the Amplify.configure(awsExports)
 
 ```javascript
 import SpeechToText from './SpeechToText'; // transcribe
@@ -1229,14 +1200,14 @@ import SpeechToText from './SpeechToText'; // transcribe
   <SpeechToText parentCallback={this.callbackFunction} />
 ```
 
-Your **src/app.js** file should look like the one below 
+Your **src/App.js** file should look like the one below 
 
 ```javascript
 /**
  * 
  * Building Intelligent Applications Workshop
  * 
- * src/app.js
+ * src/App.js
  * 
  */
 
@@ -1468,7 +1439,7 @@ export default (TextInterpretation);
 
 ```
 
-## 6.3 Update src/app.js
+## 6.3 Update src/App.js
 
 6.3.1 Add the import statement for the new component just before the ```Amplify.configure(awsExports);``` line.  
 
@@ -1483,14 +1454,14 @@ import TextInterpretation from './TextInterpretation'; // comprehend
  
 ```
 
-Your src.app.js should look like the one below
+Your src.App.js should look like the one below
 
 ```javascript
 /**
  * 
  * Building Intelligent Applications Workshop
  * 
- * src/app.js
+ * src/App.js
  * 
  */
 
@@ -1728,9 +1699,9 @@ class MyChatbox extends Component {
 export default MyChatbox;
 ```
 
-## 7.3 Add the new component to your src/app.js 
+## 7.3 Add the new component to your src/App.js 
 
-7.3.1. Add the import statement of the new component near the top of your src/app.js file just before the  ```Amplify.configure(awsExports);``` line. 
+7.3.1. Add the import statement of the new component near the top of your src/App.js file just before the  ```Amplify.configure(awsExports);``` line. 
 
 ```javascript
 import MyChatbox from './MyChatbox.js'; // lex
@@ -1742,14 +1713,14 @@ import MyChatbox from './MyChatbox.js'; // lex
   <MyChatbox />
 ```
 
-Your src/app.js file should like the one below
+Your src/App.js file should like the one below
 
 ```javascript 
 /**
  * 
  * Building Intelligent Applications Workshop
  * 
- * src/app.js
+ * src/App.js
  * 
  */
 
