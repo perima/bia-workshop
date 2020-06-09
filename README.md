@@ -118,7 +118,11 @@ For our components we will use [Material UI](https://material-ui.com/) (a popula
 npm install --save @material-ui/core
 
 ## install required font
-npm install typeface-roboto --save
+npm install typeface-roboto
+
+
+## install material-ui icons
+npm install @material-ui/icons
 ```
 
 ## 2.3. Start your app
